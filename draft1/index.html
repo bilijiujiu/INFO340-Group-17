@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="JobTrack team">
+  <meta name="description" content="JobTrack dashboard showing summary cards, recent applications, and job search insights.">
+  <title>JobTrack | Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-layout">
+      <a class="site-title" href="landing.html">JobTrack</a>
+      <nav aria-label="Main navigation" class="top-nav">
+        <a href="landing.html">Landing</a>
+        <a href="index.html">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="dashboard-main container">
+    <div class="dashboard-layout">
+      <aside class="sidebar">
+        <h1 class="sidebar-title">JobTrack</h1>
+        <nav aria-label="Dashboard sections" class="sidebar-nav">
+          <a class="current-page" href="index.html">Dashboard</a>
+          <a href="landing.html">Landing Page</a>
+          <a href="#recent-applications">Recent Applications</a>
+          <a href="#quick-insights">Quick Insights</a>
+        </nav>
+      </aside>
+
+      <section class="dashboard-content">
+        <section class="welcome-section">
+          <div>
+            <h2>Welcome back!</h2>
+            <p>You have 3 jobs that need attention this week.</p>
+          </div>
+          <a class="button primary-button" href="landing.html">Back to Landing</a>
+        </section>
+
+        <section aria-label="Summary cards" class="summary-grid">
+          <article class="summary-card">
+            <h3>48</h3>
+            <p>Saved Jobs</p>
+          </article>
+          <article class="summary-card">
+            <h3>23</h3>
+            <p>Applied</p>
+          </article>
+          <article class="summary-card">
+            <h3>7</h3>
+            <p>Interview</p>
+          </article>
+          <article class="summary-card">
+            <h3>2</h3>
+            <p>Offers</p>
+          </article>
+        </section>
+
+        <section id="recent-applications" class="dashboard-panel">
+          <h2>Recent Applications</h2>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Company</th>
+                <th scope="col">Role</th>
+                <th scope="col">Status</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Google</td>
+                <td>SWE Intern</td>
+                <td>Interview</td>
+                <td>Apr 10</td>
+              </tr>
+              <tr>
+                <td>Stripe</td>
+                <td>Frontend Engineer</td>
+                <td>Applied</td>
+                <td>Apr 8</td>
+              </tr>
+              <tr>
+                <td>Airbnb</td>
+                <td>Designer</td>
+                <td>Saved</td>
+                <td>Apr 5</td>
+              </tr>
+              <tr>
+                <td>Meta</td>
+                <td>Data Analyst</td>
+                <td>Offer</td>
+                <td>Apr 1</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="quick-insights" class="insights-grid">
+          <article class="dashboard-panel insight-card">
+            <h2>Top City</h2>
+            <p>Seattle</p>
+          </article>
+          <article class="dashboard-panel insight-card">
+            <h2>Response Rate</h2>
+            <p>48%</p>
+          </article>
+          <article class="dashboard-panel insight-card">
+            <h2>Average Wait</h2>
+            <p>12 days</p>
+          </article>
+          <article class="dashboard-panel insight-card">
+            <h2>Next Deadline</h2>
+            <p>Amazon SDE Intern · Apr 18</p>
+          </article>
+        </section>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-layout">
+      <p>&copy; 2026 JobTrack</p>
+      <nav aria-label="Footer navigation">
+        <a href="landing.html">Landing</a>
+        <a href="index.html">Dashboard</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
