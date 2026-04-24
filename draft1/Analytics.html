@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JobTrack – Analytics</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f5f6f8;
+    color: #222;
+    min-height: 100vh;
+    display: flex;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 260px;
+    background: #fff;
+    border-right: 2px solid #d0d3d8;
+    padding: 36px 24px;
+    min-height: 100vh;
+  }
+  .logo {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 40px;
+  }
+  .nav { list-style: none; }
+  .nav li {
+    padding: 14px 18px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 17px;
+    color: #444;
+  }
+  .nav li:hover { background: #f0f2f5; }
+  .nav li.active {
+    background: #b8e4e7;
+    color: #000;
+    font-weight: 700;
+  }
+
+  /* Main */
+  .main {
+    flex: 1;
+    padding: 40px;
+  }
+  h1 {
+    font-size: 24px;
+    margin-bottom: 28px;
+    font-weight: 700;
+    color: #333;
+  }
+
+  /* Filters */
+  .filters {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .filters input {
+    padding: 18px 20px;
+    border: 2px solid #333;
+    border-radius: 4px;
+    font-size: 16px;
+    background: #fff;
+  }
+
+  /* KPI row */
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .kpi {
+    background: #fff;
+    border: 2px solid #333;
+    border-radius: 4px;
+    padding: 20px 24px;
+  }
+  .kpi .label {
+    font-size: 16px;
+    font-weight: 700;
+    color: #222;
+  }
+  .kpi .value {
+    font-size: 20px;
+    font-weight: 800;
+    margin-top: 6px;
+  }
+
+  /* Cards grid */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .card {
+    background: #fff;
+    border: 2px solid #333;
+    border-radius: 4px;
+    padding: 28px;
+  }
+  .card h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: 800;
+  }
+
+  /* Donut placeholder */
+  .donut {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 22px solid #222;
+    margin: 16px auto 20px;
+    background: #fff;
+  }
+  .legend {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    font-size: 15px;
+    color: #333;
+  }
+  .legend span::before {
+    content: "●";
+    margin-right: 6px;
+  }
+
+  /* Education bars */
+  .edu-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .edu-bar {
+    flex: 1;
+    border: 2px solid #222;
+    border-radius: 3px;
+    padding: 18px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .edu-pct {
+    width: 50px;
+    text-align: right;
+    font-size: 16px;
+    color: #444;
+    font-weight: 600;
+  }
+
+  /* Locations */
+  .loc-row { margin-bottom: 16px; }
+  .loc-row .name {
+    font-size: 15px;
+    color: #222;
+    margin-bottom: 6px;
+  }
+  .bar-track {
+    height: 24px;
+    background: #e8e8e8;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    background: #aeb1b8;
+  }
+  .axis {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #666;
+    margin-top: 10px;
+    padding: 0 4px;
+  }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="logo">JobTrack</div>
+  <ul class="nav">
+    <li>Dashboard</li>
+    <li>Job Board</li>
+    <li>Applications</li>
+    <li class="active">Analytics</li>
+    <li>Settings</li>
+  </ul>
+</aside>
+
+<main class="main">
+  <h1>Analytics &amp; Insight</h1>
+
+  <div class="filters">
+    <input type="text" placeholder="Preferred job type">
+    <input type="text" placeholder="Company">
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="label">Total Apps</div><div class="value">153,785</div></div>
+    <div class="kpi"><div class="label">Interview</div><div class="value">18.7%</div></div>
+    <div class="kpi"><div class="label">Offer Rate</div><div class="value">8.96%</div></div>
+    <div class="kpi"><div class="label">Viewed</div><div class="value">350,078</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Application Status Distribution</h3>
+      <div class="donut"></div>
+      <div class="legend">
+        <span>Offer Rate</span>
+        <span>Interview</span>
+        <span>Rejected</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Education Level</h3>
+      <div class="edu-row">
+        <div class="edu-bar">Bachelor</div>
+        <div class="edu-pct">33%</div>
+      </div>
+      <div class="edu-row">
+        <div class="edu-bar">PHD</div>
+        <div class="edu-pct">30%</div>
+      </div>
+      <div class="edu-row">
+        <div class="edu-bar">Master</div>
+        <div class="edu-pct">36%</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Top Locations</h3>
+      <div class="loc-row">
+        <div class="name">SF, CA</div>
+        <div class="bar-track"><div class="bar-fill" style="width: 85%"></div></div>
+      </div>
+      <div class="loc-row">
+        <div class="name">LA, CA</div>
+        <div class="bar-track"><div class="bar-fill" style="width: 55%"></div></div>
+      </div>
+      <div class="loc-row">
+        <div class="name">New York</div>
+        <div class="bar-track"><div class="bar-fill" style="width: 25%"></div></div>
+      </div>
+      <div class="axis">
+        <span>10%</span><span>15%</span><span>20%</span><span>25%</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Visa Sponsorship</h3>
+      <div class="donut"></div>
+      <div class="legend">
+        <span>Sponsors Visa</span>
+        <span>No Visa</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>
