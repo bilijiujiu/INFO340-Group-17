@@ -1,0 +1,76 @@
+* {
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    font-family: Arial;
+    background-color: white;
+    color: black;
+    display: flex;
+}
+
+nav{
+    width: 180px;
+    padding: 20px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+nav a{
+    padding: 15px;
+    color: black;
+}
+
+.filters{
+    width: 200px;
+    padding: 20px;
+    background-color: white;
+}
+
+.filters h2 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.filters label{
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.filters select{
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 18px;
+    border: 2px solid;
+}
+
+.job-info{
+    flex: 1;
+    padding: 50px;
+}
+
+.search{
+    display: flex;
+    margin-bottom: 90px;
+    gap: 10px;
+}
+
+.grid{
+    display: grid;
+}
+
+.card{
+    border: 2px solid;
+    gap: 10px;
+    padding: 10px;
+}
+
+.card p{
+    margin: 0;
+}
+
+
+
