@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+<title id="title">Job application workflow board</title>
+<desc id="desc">Illustrated Kanban board with saved, applied, interview, and offer columns.</desc>
+<rect width="1200" height="675" fill="#f7fafc"/>
+<rect x="60" y="70" width="1080" height="535" rx="26" fill="#fff" stroke="#9fb3bf" stroke-width="4"/>
+<g>
+  <rect x="100" y="140" width="180" height="390" rx="18" fill="#eef5f7"/>
+  <rect x="310" y="140" width="180" height="390" rx="18" fill="#eef5f7"/>
+  <rect x="520" y="140" width="180" height="390" rx="18" fill="#eef5f7"/>
+  <rect x="730" y="140" width="180" height="390" rx="18" fill="#eef5f7"/>
+  <rect x="940" y="140" width="160" height="390" rx="18" fill="#eef5f7"/>
+</g>
+<g fill="#ffffff" stroke="#cbd5e1">
+  <rect x="118" y="195" width="144" height="80" rx="14"/>
+  <rect x="118" y="292" width="144" height="80" rx="14"/>
+  <rect x="328" y="195" width="144" height="80" rx="14"/>
+  <rect x="328" y="292" width="144" height="80" rx="14"/>
+  <rect x="538" y="195" width="144" height="80" rx="14"/>
+  <rect x="748" y="195" width="144" height="80" rx="14"/>
+  <rect x="958" y="195" width="124" height="80" rx="14"/>
+</g>
+</svg>
