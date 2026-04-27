@@ -3,570 +3,215 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="author" content="JobTrack team">
-  <meta name="description" content="JobTrack job search page — filter by location, salary, experience, and sponsorship.">
   <title>JobTrack | Job Search</title>
-
-  <!-- Match the same Google Font import style as other pages -->
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-
-  <style>
-    /* ─────────────────────────────────────────────
-       Job Search page — scoped styles that sit on
-       top of the shared style.css.  All class names
-       are prefixed with "js-" to avoid collisions.
-    ───────────────────────────────────────────── */
-
-    /* ── Layout wrapper (mirrors .dashboard-layout) */
-    .js-page-layout {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 2rem;
-      align-items: start;
-      padding: 2rem 0;
-    }
-
-    @media (max-width: 768px) {
-      .js-page-layout { grid-template-columns: 1fr; }
-    }
-
-    /* ── Sidebar filters ── */
-    .js-filters {
-      background: var(--color-surface, #fff);
-      border: 1px solid var(--color-border, #e5e7eb);
-      border-radius: 12px;
-      padding: 1.5rem;
-      position: sticky;
-      top: 1rem;
-    }
-
-    .js-filters h2 {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--color-muted, #6b7280);
-      margin: 1.25rem 0 0.5rem;
-    }
-
-    .js-filters h2:first-child { margin-top: 0; }
-
-    .js-filters label {
-      display: block;
-      font-size: 0.8rem;
-      color: var(--color-muted, #6b7280);
-      margin-bottom: 0.25rem;
-    }
-
-    .js-filters select {
-      width: 100%;
-      padding: 0.45rem 0.75rem;
-      border: 1px solid var(--color-border, #e5e7eb);
-      border-radius: 8px;
-      font-size: 0.875rem;
-      background: var(--color-bg, #f9fafb);
-      color: var(--color-text, #111827);
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 0.75rem center;
-      cursor: pointer;
-      transition: border-color 0.15s;
-    }
-
-    .js-filters select:focus {
-      outline: none;
-      border-color: var(--color-primary, #2563eb);
-      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
-    }
-
-    /* ── Main content area ── */
-    .js-main { min-width: 0; }
-
-    /* ── Search bar ── */
-    .js-search-bar {
-      display: flex;
-      gap: 0.75rem;
-      margin-bottom: 1.75rem;
-    }
-
-    .js-search-bar input[type="text"] {
-      flex: 1;
-      padding: 0.6rem 1rem;
-      border: 1px solid var(--color-border, #e5e7eb);
-      border-radius: 8px;
-      font-size: 0.95rem;
-      background: var(--color-surface, #fff);
-      color: var(--color-text, #111827);
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-
-    .js-search-bar input[type="text"]::placeholder { color: var(--color-muted, #9ca3af); }
-
-    .js-search-bar input[type="text"]:focus {
-      outline: none;
-      border-color: var(--color-primary, #2563eb);
-      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
-    }
-
-    .js-search-bar button {
-      padding: 0.6rem 1.4rem;
-      background: var(--color-primary, #2563eb);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
-    }
-
-    .js-search-bar button:hover { background: var(--color-primary-dark, #1d4ed8); }
-    .js-search-bar button:active { transform: scale(0.97); }
-
-    /* ── Results header ── */
-    .js-results-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-    }
-
-    .js-results-header h2 {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--color-text, #111827);
-    }
-
-    .js-results-count {
-      font-size: 0.8rem;
-      color: var(--color-muted, #6b7280);
-    }
-
-    /* ── Job cards grid ── */
-    .js-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem;
-    }
-
-    .js-card {
-      background: var(--color-surface, #fff);
-      border: 1px solid var(--color-border, #e5e7eb);
-      border-radius: 12px;
-      padding: 1.25rem 1.25rem 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      transition: box-shadow 0.2s, transform 0.2s;
-      cursor: pointer;
-    }
-
-    .js-card:hover {
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-      transform: translateY(-2px);
-    }
-
-    .js-card-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
-
-    .js-card h3 {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--color-text, #111827);
-      margin: 0;
-      line-height: 1.4;
-    }
-
-    .js-badge {
-      flex-shrink: 0;
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.2rem 0.55rem;
-      border-radius: 999px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .js-badge-internship { background: #dbeafe; color: #1d4ed8; }
-    .js-badge-fulltime   { background: #dcfce7; color: #16a34a; }
-    .js-badge-parttime   { background: #fef9c3; color: #a16207; }
-
-    .js-card-meta {
-      font-size: 0.82rem;
-      color: var(--color-muted, #6b7280);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem 0.75rem;
-    }
-
-    .js-card-meta span { display: flex; align-items: center; gap: 0.25rem; }
-
-    .js-card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 0.25rem;
-      padding-top: 0.75rem;
-      border-top: 1px solid var(--color-border, #f3f4f6);
-    }
-
-    .js-sponsor-tag {
-      font-size: 0.75rem;
-      color: var(--color-muted, #6b7280);
-      background: var(--color-bg, #f9fafb);
-      border: 1px solid var(--color-border, #e5e7eb);
-      border-radius: 6px;
-      padding: 0.15rem 0.5rem;
-    }
-
-    .js-save-btn {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--color-primary, #2563eb);
-      background: none;
-      border: 1px solid var(--color-primary, #2563eb);
-      border-radius: 7px;
-      padding: 0.25rem 0.75rem;
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s;
-    }
-
-    .js-save-btn:hover {
-      background: var(--color-primary, #2563eb);
-      color: #fff;
-    }
-
-    /* ── Empty state ── */
-    .js-empty {
-      text-align: center;
-      padding: 3rem 1rem;
-      color: var(--color-muted, #6b7280);
-      display: none;
-    }
-
-    .js-empty p { margin-top: 0.5rem; font-size: 0.9rem; }
-  </style>
 </head>
 <body>
 
-  <!-- ── Shared site header (matches index.html / landing.html) ── -->
+  <!-- Site Header -->
   <header class="site-header">
-    <div class="container header-layout">
-      <a class="site-title" href="landing.html">JobTrack</a>
+    <div class="container header-inner">
+      <a class="site-logo" href="index.html">JobTrack</a>
       <nav aria-label="Main navigation" class="top-nav">
-        <a href="landing.html">Landing</a>
+        <a href="landing.html">Home</a>
         <a href="index.html">Dashboard</a>
-        <a class="current-page" href="Job_search.html">Job Search</a>
+        <a href="search.html" class="active">Job Search</a>
+        <a href="applications.html">Applications</a>
+        <a href="analytics.html">Analytics</a>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <div class="js-page-layout">
+    <div class="search-layout">
 
-      <!-- ── Sidebar: Filters ── -->
-      <aside class="js-filters" aria-label="Job filters">
+      <!-- Filter Sidebar -->
+      <aside class="filter-panel" aria-label="Job filters">
+        <h2>Filters</h2>
+        <form>
+          <div class="filter-group">
+            <label for="filter-location">Location</label>
+            <select id="filter-location" name="location">
+              <option value="">All Locations</option>
+              <option value="seattle">Seattle, WA</option>
+              <option value="sf">San Francisco, CA</option>
+              <option value="nyc">New York, NY</option>
+              <option value="remote">Remote</option>
+            </select>
+          </div>
 
-        <h2>Location</h2>
-        <label for="filter-location">City / Remote</label>
-        <select id="filter-location" name="location">
-          <option value="">All Locations</option>
-          <option value="seattle">Seattle, WA</option>
-          <option value="sf">San Francisco, CA</option>
-          <option value="nyc">New York, NY</option>
-          <option value="remote">Remote</option>
-        </select>
+          <div class="filter-group">
+            <label for="filter-salary">Salary Range</label>
+            <select id="filter-salary" name="salary">
+              <option value="">Any Salary</option>
+              <option value="0-20">$0 – $20 / hr</option>
+              <option value="20-30">$20 – $30 / hr</option>
+              <option value="30-50">$30 – $50 / hr</option>
+              <option value="50+">$50+ / hr</option>
+            </select>
+          </div>
 
-        <h2>Salary</h2>
-        <label for="filter-salary">Range (per hour)</label>
-        <select id="filter-salary" name="salary">
-          <option value="">Any</option>
-          <option value="0-20">$0 – $20 / hr</option>
-          <option value="20-30">$20 – $30 / hr</option>
-          <option value="30-50">$30 – $50 / hr</option>
-          <option value="50+">$50+ / hr</option>
-        </select>
+          <div class="filter-group">
+            <label for="filter-experience">Experience Level</label>
+            <select id="filter-experience" name="experience">
+              <option value="">All Levels</option>
+              <option value="internship">Internship</option>
+              <option value="part-time">Part-time</option>
+              <option value="full-time">Full-time</option>
+            </select>
+          </div>
 
-        <h2>Experience</h2>
-        <label for="filter-exp">Level</label>
-        <select id="filter-exp" name="experience">
-          <option value="">All Levels</option>
-          <option value="internship">Internship</option>
-          <option value="part-time">Part-time</option>
-          <option value="full-time">Full-time</option>
-        </select>
+          <div class="filter-group">
+            <label for="filter-sponsor">Visa Sponsorship</label>
+            <select id="filter-sponsor" name="sponsorship">
+              <option value="">All</option>
+              <option value="cpt-opt">CPT / OPT</option>
+              <option value="h1b">H-1B</option>
+              <option value="none">No Sponsorship</option>
+            </select>
+          </div>
 
-        <h2>Sponsorship</h2>
-        <label for="filter-sponsor">Visa Support</label>
-        <select id="filter-sponsor" name="sponsorship">
-          <option value="">All</option>
-          <option value="cpt-opt">CPT / OPT</option>
-          <option value="h1b">H-1B</option>
-          <option value="none">No Sponsorship</option>
-        </select>
-
+          <button type="submit" class="btn btn-primary btn-filter-full">Apply Filters</button>
+        </form>
       </aside>
 
-      <!-- ── Main: Search + Results ── -->
-      <section class="js-main" aria-label="Job listings">
+      <!-- Search Results -->
+      <section class="search-main" aria-label="Job listings">
 
-        <div class="js-search-bar" role="search">
+        <!-- Search Bar -->
+        <div class="search-bar" role="search">
           <label for="job-search-input" class="sr-only">Search jobs</label>
-          <input
-            type="text"
-            id="job-search-input"
-            placeholder="Search by title, company, or keyword…"
-            aria-label="Search jobs"
-          >
-          <button type="button" id="search-btn">Search</button>
+          <input type="text" id="job-search-input" placeholder="Search by title, company, or keyword...">
+          <button type="button" class="btn btn-primary">Search</button>
         </div>
 
-        <div class="js-results-header">
-          <h2>Job Listings</h2>
-          <span class="js-results-count" id="results-count">Showing 6 results</span>
+        <div class="results-header">
+          <h1>Job Listings</h1>
+          <span class="results-count">Showing 6 results</span>
         </div>
 
-        <div class="js-grid" id="job-grid">
+        <!-- Job Cards Grid -->
+        <div class="job-grid">
 
-          <article class="js-card">
-            <div class="js-card-top">
-              <h3>Product Manager</h3>
-              <span class="js-badge js-badge-fulltime">Full-time</span>
+          <article class="job-card">
+            <div class="job-card-top">
+              <h2>Product Manager</h2>
+              <span class="badge badge-fulltime">Full-time</span>
             </div>
-            <div class="js-card-meta">
-              <span>🏢 Google</span>
-              <span>📍 Seattle, WA · Remote</span>
-              <span>💰 $45 / hr</span>
+            <div class="job-card-meta">
+              <span>Google</span>
+              <span>Seattle, WA · Remote</span>
+              <span>$45 / hr</span>
             </div>
-            <div class="js-card-footer">
-              <span class="js-sponsor-tag">H-1B</span>
-              <button class="js-save-btn" type="button">Save</button>
+            <div class="job-card-footer">
+              <span class="sponsor-tag">H-1B</span>
+              <a href="detail.html" class="btn-save">View Details</a>
             </div>
           </article>
 
-          <article class="js-card">
-            <div class="js-card-top">
-              <h3>Software Engineer</h3>
-              <span class="js-badge js-badge-fulltime">Full-time</span>
+          <article class="job-card">
+            <div class="job-card-top">
+              <h2>Software Engineer</h2>
+              <span class="badge badge-fulltime">Full-time</span>
             </div>
-            <div class="js-card-meta">
-              <span>🏢 Amazon</span>
-              <span>📍 Seattle, WA</span>
-              <span>💰 $55 / hr</span>
+            <div class="job-card-meta">
+              <span>Amazon</span>
+              <span>Seattle, WA</span>
+              <span>$55 / hr</span>
             </div>
-            <div class="js-card-footer">
-              <span class="js-sponsor-tag">CPT / OPT</span>
-              <button class="js-save-btn" type="button">Save</button>
-            </div>
-          </article>
-
-          <article class="js-card">
-            <div class="js-card-top">
-              <h3>Teaching Assistant</h3>
-              <span class="js-badge js-badge-parttime">Part-time</span>
-            </div>
-            <div class="js-card-meta">
-              <span>🏢 University of Washington</span>
-              <span>📍 Seattle, WA</span>
-              <span>💰 $21 / hr</span>
-            </div>
-            <div class="js-card-footer">
-              <span class="js-sponsor-tag">No Sponsorship</span>
-              <button class="js-save-btn" type="button">Save</button>
+            <div class="job-card-footer">
+              <span class="sponsor-tag">CPT / OPT</span>
+              <a href="detail.html" class="btn-save">View Details</a>
             </div>
           </article>
 
-          <article class="js-card">
-            <div class="js-card-top">
-              <h3>Frontend Engineer Intern</h3>
-              <span class="js-badge js-badge-internship">Internship</span>
+          <article class="job-card">
+            <div class="job-card-top">
+              <h2>Teaching Assistant</h2>
+              <span class="badge badge-parttime">Part-time</span>
             </div>
-            <div class="js-card-meta">
-              <span>🏢 Stripe</span>
-              <span>📍 San Francisco, CA</span>
-              <span>💰 $38 / hr</span>
+            <div class="job-card-meta">
+              <span>University of Washington</span>
+              <span>Seattle, WA</span>
+              <span>$21 / hr</span>
             </div>
-            <div class="js-card-footer">
-              <span class="js-sponsor-tag">CPT / OPT</span>
-              <button class="js-save-btn" type="button">Save</button>
-            </div>
-          </article>
-
-          <article class="js-card">
-            <div class="js-card-top">
-              <h3>Data Analyst</h3>
-              <span class="js-badge js-badge-fulltime">Full-time</span>
-            </div>
-            <div class="js-card-meta">
-              <span>🏢 Meta</span>
-              <span>📍 Remote</span>
-              <span>💰 $50 / hr</span>
-            </div>
-            <div class="js-card-footer">
-              <span class="js-sponsor-tag">H-1B</span>
-              <button class="js-save-btn" type="button">Save</button>
+            <div class="job-card-footer">
+              <span class="sponsor-tag">No Sponsorship</span>
+              <a href="detail.html" class="btn-save">View Details</a>
             </div>
           </article>
 
-          <article class="js-card">
-            <div class="js-card-top">
-              <h3>UX Designer Intern</h3>
-              <span class="js-badge js-badge-internship">Internship</span>
+          <article class="job-card">
+            <div class="job-card-top">
+              <h2>Frontend Engineer Intern</h2>
+              <span class="badge badge-internship">Internship</span>
             </div>
-            <div class="js-card-meta">
-              <span>🏢 Airbnb</span>
-              <span>📍 San Francisco, CA · Remote</span>
-              <span>💰 $28 / hr</span>
+            <div class="job-card-meta">
+              <span>Stripe</span>
+              <span>San Francisco, CA</span>
+              <span>$38 / hr</span>
             </div>
-            <div class="js-card-footer">
-              <span class="js-sponsor-tag">CPT / OPT</span>
-              <button class="js-save-btn" type="button">Save</button>
+            <div class="job-card-footer">
+              <span class="sponsor-tag">CPT / OPT</span>
+              <a href="detail.html" class="btn-save">View Details</a>
+            </div>
+          </article>
+
+          <article class="job-card">
+            <div class="job-card-top">
+              <h2>Data Analyst</h2>
+              <span class="badge badge-fulltime">Full-time</span>
+            </div>
+            <div class="job-card-meta">
+              <span>Meta</span>
+              <span>Remote</span>
+              <span>$50 / hr</span>
+            </div>
+            <div class="job-card-footer">
+              <span class="sponsor-tag">H-1B</span>
+              <a href="detail.html" class="btn-save">View Details</a>
+            </div>
+          </article>
+
+          <article class="job-card">
+            <div class="job-card-top">
+              <h2>UX Designer Intern</h2>
+              <span class="badge badge-internship">Internship</span>
+            </div>
+            <div class="job-card-meta">
+              <span>Airbnb</span>
+              <span>San Francisco, CA · Remote</span>
+              <span>$28 / hr</span>
+            </div>
+            <div class="job-card-footer">
+              <span class="sponsor-tag">CPT / OPT</span>
+              <a href="detail.html" class="btn-save">View Details</a>
             </div>
           </article>
 
         </div>
-
-        <!-- Empty state (shown via JS when no results match) -->
-        <div class="js-empty" id="empty-state" aria-live="polite">
-          <p style="font-size:2rem">🔍</p>
-          <p>No jobs match your current filters.</p>
-        </div>
-
       </section>
+
     </div>
   </main>
 
-  <!-- ── Shared site footer ── -->
+  <!-- Site Footer -->
   <footer class="site-footer">
-    <div class="container footer-layout">
-      <p>&copy; 2026 JobTrack</p>
-      <nav aria-label="Footer navigation">
-        <a href="landing.html">Landing</a>
+    <div class="container footer-inner">
+      <p>&copy; 2026 JobTrack. Built for INFO 340, University of Washington.</p>
+      <nav aria-label="Footer navigation" class="footer-nav">
+        <a href="landing.html">Home</a>
         <a href="index.html">Dashboard</a>
-        <a href="Job_search.html">Job Search</a>
+        <a href="search.html">Job Search</a>
+        <a href="applications.html">Applications</a>
+        <a href="analytics.html">Analytics</a>
       </nav>
     </div>
   </footer>
-
-  <script>
-    // ── Simple client-side filter + search ──────────────────────────
-    const cards = Array.from(document.querySelectorAll('.js-card'));
-    const grid  = document.getElementById('job-grid');
-    const count = document.getElementById('results-count');
-    const empty = document.getElementById('empty-state');
-
-    function getCardText(card) {
-      return card.textContent.toLowerCase();
-    }
-
-    function filterCards() {
-      const query   = document.getElementById('job-search-input').value.toLowerCase().trim();
-      const loc     = document.getElementById('filter-location').value;
-      const salary  = document.getElementById('filter-salary').value;
-      const exp     = document.getElementById('filter-exp').value;
-      const sponsor = document.getElementById('filter-sponsor').value;
-
-      // Salary range map
-      const salaryRanges = {
-        '0-20':  [0, 20],
-        '20-30': [20, 30],
-        '30-50': [30, 50],
-        '50+':   [50, Infinity],
-      };
-
-      // Location keyword map
-      const locKeywords = {
-        'seattle': 'seattle',
-        'sf': 'san francisco',
-        'nyc': 'new york',
-        'remote': 'remote',
-      };
-
-      // Experience badge text map
-      const expBadge = {
-        'internship': 'internship',
-        'part-time':  'part-time',
-        'full-time':  'full-time',
-      };
-
-      // Sponsorship keyword map
-      const sponsorKeywords = {
-        'cpt-opt': 'cpt',
-        'h1b':     'h-1b',
-        'none':    'no sponsorship',
-      };
-
-      let visible = 0;
-
-      cards.forEach(card => {
-        const text = getCardText(card);
-
-        // 1. Keyword search
-        if (query && !text.includes(query)) {
-          card.style.display = 'none'; return;
-        }
-
-        // 2. Location filter
-        if (loc && locKeywords[loc] && !text.includes(locKeywords[loc])) {
-          card.style.display = 'none'; return;
-        }
-
-        // 3. Salary filter
-        if (salary && salaryRanges[salary]) {
-          const match = text.match(/\$(\d+)\s*\/\s*hr/);
-          if (match) {
-            const rate = parseInt(match[1], 10);
-            const [min, max] = salaryRanges[salary];
-            if (rate < min || rate > max) { card.style.display = 'none'; return; }
-          }
-        }
-
-        // 4. Experience filter
-        if (exp && expBadge[exp] && !text.includes(expBadge[exp])) {
-          card.style.display = 'none'; return;
-        }
-
-        // 5. Sponsorship filter
-        if (sponsor && sponsorKeywords[sponsor] && !text.includes(sponsorKeywords[sponsor])) {
-          card.style.display = 'none'; return;
-        }
-
-        card.style.display = '';
-        visible++;
-      });
-
-      count.textContent = `Showing ${visible} result${visible !== 1 ? 's' : ''}`;
-      empty.style.display = visible === 0 ? 'block' : 'none';
-    }
-
-    // Wire up events
-    document.getElementById('search-btn').addEventListener('click', filterCards);
-    document.getElementById('job-search-input').addEventListener('keydown', e => {
-      if (e.key === 'Enter') filterCards();
-    });
-    ['filter-location','filter-salary','filter-exp','filter-sponsor'].forEach(id => {
-      document.getElementById(id).addEventListener('change', filterCards);
-    });
-
-    // ── Save button toggle ───────────────────────────────────────────
-    document.querySelectorAll('.js-save-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const saved = btn.textContent === 'Saved';
-        btn.textContent = saved ? 'Save' : 'Saved';
-        btn.style.background = saved ? '' : 'var(--color-primary, #2563eb)';
-        btn.style.color = saved ? '' : '#fff';
-      });
-    });
-  </script>
 
 </body>
 </html>
