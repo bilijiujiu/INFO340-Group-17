@@ -1,94 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JobTrack – Analytics</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JobTrack — Analytics &amp; Insight</title>
+
+  <!-- Bootstrap 5 (loaded first so our own rules can override) -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+  <!-- Our custom stylesheet (loaded last so it wins the cascade) -->
+  <link rel="stylesheet" href="css/analytics.css">
 </head>
 <body>
 
-<aside class="sidebar">
-  <div class="logo">JobTrack</div>
-  <ul class="nav">
-    <li>Dashboard</li>
-    <li>Job Board</li>
-    <li>Applications</li>
-    <li class="active">Analytics</li>
-    <li>Settings</li>
-  </ul>
-</aside>
+  <div class="page-wrapper">
+    
+    <div class="app-frame">
+      <div class="row g-0">
 
-<main class="main">
-  <h1>Analytics &amp; Insight</h1>
+        <!-- ===== Sidebar ===== -->
+        <aside class="col-12 col-md-3 sidebar">
+          <h2 class="brand">JobTrack</h2>
+          <nav>
+            <ul class="nav-list">
+              <li><a href="#" class="nav-link-item">Dashboard</a></li>
+              <li><a href="#" class="nav-link-item">Job Board</a></li>
+              <li><a href="#" class="nav-link-item">Applications</a></li>
+              <li><a href="#" class="nav-link-item active">Analytics</a></li>
+              <li><a href="#" class="nav-link-item">Settings</a></li>
+            </ul>
+          </nav>
+        </aside>
 
-  <div class="filters">
-    <input type="text" placeholder="Preferred job type">
-    <input type="text" placeholder="Company">
+        <!-- ===== Main content ===== -->
+        <main class="col-12 col-md-9 main-content">
+
+          <!-- Filters -->
+          <section class="row g-3 mb-3">
+            <div class="col-12 col-md-6">
+              <input type="text" class="form-control filter-input"
+                     placeholder="Preferred job type">
+            </div>
+            <div class="col-12 col-md-6">
+              <input type="text" class="form-control filter-input"
+                     placeholder="Company">
+            </div>
+          </section>
+
+          <!-- KPI tiles -->
+          <section class="row g-3 mb-3">
+            <div class="col-6 col-md-3">
+              <div class="kpi-tile">
+                <p class="kpi-label">Total Apps</p>
+                <p class="kpi-value">153,785</p>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="kpi-tile">
+                <p class="kpi-label">Interview</p>
+                <p class="kpi-value">18.7%</p>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="kpi-tile">
+                <p class="kpi-label">Offer Rate</p>
+                <p class="kpi-value">8.96%</p>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="kpi-tile">
+                <p class="kpi-label">Viewed</p>
+                <p class="kpi-value">350,078</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Chart row 1: Status Distribution + Education Level -->
+          <section class="row g-3 mb-3">
+
+            <div class="col-12 col-md-6">
+              <article class="panel">
+                <h3 class="panel-title">Application Status Distribution</h3>
+                <div class="donut-wrapper">
+                  <div class="donut donut-status"></div>
+                </div>
+                <ul class="legend">
+                  <li><span class="dot dot-offer"></span>Offer Rate</li>
+                  <li><span class="dot dot-interview"></span>Interview</li>
+                  <li><span class="dot dot-rejected"></span>Rejected</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <article class="panel">
+                <h3 class="panel-title">Education Level</h3>
+
+                <div class="edu-row">
+                  <div class="edu-bar"><span>Bachelor</span></div>
+                  <span class="edu-pct">33%</span>
+                </div>
+                <div class="edu-row">
+                  <div class="edu-bar"><span>PHD</span></div>
+                  <span class="edu-pct">30%</span>
+                </div>
+                <div class="edu-row">
+                  <div class="edu-bar"><span>Master</span></div>
+                  <span class="edu-pct">36%</span>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <!-- Chart row 2: Top Locations + Visa Sponsorship -->
+          <section class="row g-3 mb-3">
+
+            <div class="col-12 col-md-6">
+              <article class="panel">
+                <h3 class="panel-title">Top Locations</h3>
+
+                <p class="loc-label">SF, CA</p>
+                <div class="loc-track">
+                  <div class="loc-fill" style="width: 75%;"></div>
+                </div>
+
+                <p class="loc-label">LA, CA</p>
+                <div class="loc-track">
+                  <div class="loc-fill" style="width: 45%;"></div>
+                </div>
+
+                <p class="loc-label">New York</p>
+                <div class="loc-track">
+                  <div class="loc-fill" style="width: 30%;"></div>
+                </div>
+
+                <ul class="loc-axis">
+                  <li>10%</li>
+                  <li>15%</li>
+                  <li>20%</li>
+                  <li>25%</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <article class="panel">
+                <h3 class="panel-title">Visa Sponsorship</h3>
+                <div class="donut-wrapper">
+                  <div class="donut donut-visa"></div>
+                </div>
+                <ul class="legend">
+                  <li><span class="dot dot-sponsor"></span>Sponsors Visa</li>
+                  <li><span class="dot dot-novisa"></span>No Visa</li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+        </main>
+      </div>
+    </div>
   </div>
-
-  <div class="kpis">
-    <div class="kpi"><div class="label">Total Apps</div><div class="value">153,785</div></div>
-    <div class="kpi"><div class="label">Interview</div><div class="value">18.7%</div></div>
-    <div class="kpi"><div class="label">Offer Rate</div><div class="value">8.96%</div></div>
-    <div class="kpi"><div class="label">Viewed</div><div class="value">350,078</div></div>
-  </div>
-
-  <div class="grid">
-    <div class="card">
-      <h3>Application Status Distribution</h3>
-      <div class="donut"></div>
-      <div class="legend">
-        <span>Offer Rate</span>
-        <span>Interview</span>
-        <span>Rejected</span>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Education Level</h3>
-      <div class="edu-row">
-        <div class="edu-bar">Bachelor</div>
-        <div class="edu-pct">33%</div>
-      </div>
-      <div class="edu-row">
-        <div class="edu-bar">PHD</div>
-        <div class="edu-pct">30%</div>
-      </div>
-      <div class="edu-row">
-        <div class="edu-bar">Master</div>
-        <div class="edu-pct">36%</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Top Locations</h3>
-      <div class="loc-row">
-        <div class="name">SF, CA</div>
-        <div class="bar-track"><div class="bar-fill" style="width: 85%"></div></div>
-      </div>
-      <div class="loc-row">
-        <div class="name">LA, CA</div>
-        <div class="bar-track"><div class="bar-fill" style="width: 55%"></div></div>
-      </div>
-      <div class="loc-row">
-        <div class="name">New York</div>
-        <div class="bar-track"><div class="bar-fill" style="width: 25%"></div></div>
-      </div>
-      <div class="axis">
-        <span>10%</span><span>15%</span><span>20%</span><span>25%</span>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Visa Sponsorship</h3>
-      <div class="donut"></div>
-      <div class="legend">
-        <span>Sponsors Visa</span>
-        <span>No Visa</span>
-      </div>
-    </div>
-  </div>
-</main>
 
 </body>
 </html>
