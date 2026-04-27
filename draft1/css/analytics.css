@@ -1,3 +1,7 @@
+/* ================================================================
+   JobTrack — Analytics & Insight
+   ================================================================ */
+
 body {
   background-color: #ffffff;
   font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
@@ -13,17 +17,7 @@ body {
 
 .app-frame {
   background-color: #ffffff;
-  border: none;
-  padding: 0;
   min-height: 100vh;
-}
-
-/* The thick black-bordered frame around the whole app */
-.app-frame {
-  background-color: #ffffff;
-  border: 2px solid #111;
-  padding: 20px;
-  min-height: 800px;
 }
 
 /* ---------- Sidebar ---------- */
@@ -31,6 +25,7 @@ body {
   background-color: #f2f2f2;
   padding: 24px 20px;
   border-right: 1px solid #ddd;
+  min-height: 100vh;
 }
 
 .brand {
@@ -69,7 +64,7 @@ body {
 
 /* ---------- Main content ---------- */
 .main-content {
-  padding: 20px 16px;
+  padding: 24px 32px;
 }
 
 /* ---------- Filter inputs ---------- */
@@ -118,7 +113,18 @@ body {
   margin-bottom: 12px;
 }
 
-/* ---------- Donut charts (pure CSS) ---------- */
+/* ---------- Insight captions ---------- */
+.insight {
+  margin: 14px 0 0 0;
+  padding: 10px 12px;
+  background-color: #f4f9fc;
+  border-left: 3px solid #4a90d9;
+  font-size: 0.85rem;
+  color: #444;
+  line-height: 1.4;
+}
+
+/* ---------- Donut charts ---------- */
 .donut-wrapper {
   display: flex;
   justify-content: center;
@@ -134,19 +140,16 @@ body {
   background-color: #fff;
 }
 
-/* Status: 3 slices using conic-gradient on the inside */
 .donut-status {
   background: conic-gradient(
-    #4a90d9 0 32%,    /* Offer Rate  */
-    #f0a83a 32% 68%, /* Interview   */
-    #d96a6a 68% 100% /* Rejected    */
+    #4a90d9 0 32%,
+    #f0a83a 32% 68%,
+    #d96a6a 68% 100%
   );
-  /* Hollow center */
   -webkit-mask: radial-gradient(circle, transparent 38%, black 39%);
           mask: radial-gradient(circle, transparent 38%, black 39%);
 }
 
-/* Visa: 2 slices */
 .donut-visa {
   background: conic-gradient(
     #4a90d9 0 60%,
@@ -241,15 +244,16 @@ body {
   max-width: 60%;
 }
 
-/* ---------- Responsive tweaks (mobile-first overrides) ---------- */
+/* ---------- Responsive tweaks ---------- */
 @media (max-width: 767.98px) {
   .sidebar {
     border-right: none;
     border-bottom: 1px solid #ddd;
+    min-height: auto;
   }
 
-  .app-frame {
-    padding: 12px;
+  .main-content {
+    padding: 16px;
   }
 
   .brand {

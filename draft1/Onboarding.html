@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JobTrack — Welcome</title>
+
+  <!-- Bootstrap 5 (loaded first so our own rules can override) -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+  <!-- Our custom stylesheet (loaded last so it wins the cascade) -->
+  <link rel="stylesheet" href="css/onboarding.css">
+</head>
+<body>
+
+  <div class="onboarding-wrapper">
+
+    <!-- Header -->
+    <header class="onboarding-header">
+      <h1 class="brand-mark">JobTrack</h1>
+      <p class="welcome-line">Welcome! Let's set up your job search.</p>
+    </header>
+
+    <!-- Form card -->
+    <main class="form-card">
+
+      <h2 class="form-title">Tell us about yourself</h2>
+      <p class="form-subtitle">
+        We'll use this to personalize your job recommendations and analytics.
+      </p>
+
+      <form class="onboarding-form" action="Applications.html" method="get">
+
+        <!-- ===== Section 1: Basic info ===== -->
+        <fieldset class="form-section">
+          <legend class="section-legend">Basic Info</legend>
+
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" id="name" name="name"
+                     class="form-control" placeholder="Jane Doe" required>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" name="email"
+                     class="form-control" placeholder="jane@uw.edu" required>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ===== Section 2: Job preferences ===== -->
+        <fieldset class="form-section">
+          <legend class="section-legend">Job Preferences</legend>
+
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <label for="jobtype" class="form-label">Preferred Job Type</label>
+              <select id="jobtype" name="jobtype" class="form-select" required>
+                <option value="" disabled selected>Choose one...</option>
+                <option value="swe">Software Engineer</option>
+                <option value="pm">Product Manager</option>
+                <option value="designer">Designer (UX/UI)</option>
+                <option value="data">Data Analyst / Scientist</option>
+                <option value="research">Research</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label for="locations" class="form-label">Target Locations</label>
+              <input type="text" id="locations" name="locations"
+                     class="form-control"
+                     placeholder="e.g. Seattle, SF, NYC">
+              <small class="form-help">Separate multiple cities with commas</small>
+            </div>
+          </div>
+
+          <div class="row g-3 mt-1">
+            <div class="col-6 col-md-3">
+              <label for="salary-min" class="form-label">Min Salary (per hr)</label>
+              <input type="number" id="salary-min" name="salary-min"
+                     class="form-control" placeholder="40" min="0">
+            </div>
+            <div class="col-6 col-md-3">
+              <label for="salary-max" class="form-label">Max Salary (per hr)</label>
+              <input type="number" id="salary-max" name="salary-max"
+                     class="form-control" placeholder="80" min="0">
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label for="experience" class="form-label">Experience Level</label>
+              <select id="experience" name="experience" class="form-select">
+                <option value="" disabled selected>Choose one...</option>
+                <option value="internship">Internship</option>
+                <option value="entry">Entry-level (0-2 yrs)</option>
+                <option value="mid">Mid-level (3-5 yrs)</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ===== Section 3: Background ===== -->
+        <fieldset class="form-section">
+          <legend class="section-legend">Background</legend>
+
+          <p class="form-label">Education Level</p>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="education" value="bachelor" required>
+              <span>Bachelor's</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="education" value="master">
+              <span>Master's</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="education" value="phd">
+              <span>PhD</span>
+            </label>
+          </div>
+
+          <p class="form-label mt-3">Need Visa Sponsorship?</p>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="visa" value="yes" required>
+              <span>Yes</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="visa" value="no">
+              <span>No</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- ===== Submit row ===== -->
+        <div class="form-actions">
+          <a href="Applications.html" class="btn-skip">Skip for now</a>
+          <button type="submit" class="btn-submit">Get Started →</button>
+        </div>
+
+      </form>
+    </main>
+
+    <footer class="onboarding-footer">
+      <p>You can update these preferences anytime in Settings.</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
