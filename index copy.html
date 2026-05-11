@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="JobTrack Team">
+  <meta name="description" content="JobTrack dashboard — track your saved jobs, applications, interviews, and offers in one place.">
+  <title>JobTrack | Dashboard</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-logo" href="index.html">JobTrack</a>
+      <nav aria-label="Main navigation" class="top-nav">
+        <a href="landing.html">Home</a>
+        <a href="index.html" class="active">Dashboard</a>
+        <a href="search.html">Job Search</a>
+        <a href="applications.html">Applications</a>
+        <a href="analytics.html">Analytics</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <div class="dashboard-layout">
+
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar">
+        <h2 class="sidebar-title">JobTrack</h2>
+        <nav aria-label="Dashboard sections" class="sidebar-nav">
+          <a class="active" href="index.html">Dashboard</a>
+          <a href="search.html">Job Search</a>
+          <a href="applications.html">Applications</a>
+          <a href="analytics.html">Analytics</a>
+        </nav>
+      </aside>
+
+      <!-- Dashboard Content -->
+      <section class="dashboard-content">
+
+        <!-- Welcome Banner -->
+        <section class="welcome-section" aria-label="Welcome message">
+          <div>
+            <h1>Welcome back!</h1>
+            <p>You have 3 jobs that need attention this week.</p>
+          </div>
+          <a class="btn btn-outline btn-welcome" href="search.html">Browse Jobs</a>
+        </section>
+
+        <!-- Summary Cards -->
+        <section aria-label="Application summary" class="summary-grid">
+          <article class="summary-card">
+            <p class="card-number">48</p>
+            <p class="card-label">Saved Jobs</p>
+          </article>
+          <article class="summary-card">
+            <p class="card-number">23</p>
+            <p class="card-label">Applied</p>
+          </article>
+          <article class="summary-card">
+            <p class="card-number">7</p>
+            <p class="card-label">Interviews</p>
+          </article>
+          <article class="summary-card">
+            <p class="card-number">2</p>
+            <p class="card-label">Offers</p>
+          </article>
+        </section>
+
+        <!-- Recent Applications Table -->
+        <section class="dashboard-panel" aria-label="Recent applications">
+          <h2>Recent Applications</h2>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Company</th>
+                <th scope="col">Role</th>
+                <th scope="col">Status</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Google</td>
+                <td>SWE Intern</td>
+                <td><span class="status-badge interview">Interview</span></td>
+                <td>Apr 10</td>
+              </tr>
+              <tr>
+                <td>Stripe</td>
+                <td>Frontend Engineer</td>
+                <td><span class="status-badge applied">Applied</span></td>
+                <td>Apr 8</td>
+              </tr>
+              <tr>
+                <td>Airbnb</td>
+                <td>UX Designer</td>
+                <td><span class="status-badge saved">Saved</span></td>
+                <td>Apr 5</td>
+              </tr>
+              <tr>
+                <td>Meta</td>
+                <td>Data Analyst</td>
+                <td><span class="status-badge offer">Offer</span></td>
+                <td>Apr 1</td>
+              </tr>
+              <tr>
+                <td>Amazon</td>
+                <td>SDE Intern</td>
+                <td><span class="status-badge rejected">Rejected</span></td>
+                <td>Mar 28</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Quick Insights -->
+        <section aria-label="Quick insights" class="insights-grid">
+          <article class="dashboard-panel insight-card">
+            <h3>Top City</h3>
+            <p class="insight-value">Seattle</p>
+          </article>
+          <article class="dashboard-panel insight-card">
+            <h3>Response Rate</h3>
+            <p class="insight-value">48%</p>
+          </article>
+          <article class="dashboard-panel insight-card">
+            <h3>Average Wait</h3>
+            <p class="insight-value">12 days</p>
+          </article>
+          <article class="dashboard-panel insight-card">
+            <h3>Next Deadline</h3>
+            <p class="insight-value">Amazon · Apr 18</p>
+          </article>
+        </section>
+
+      </section>
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 JobTrack. Built for INFO 340, University of Washington.</p>
+      <nav aria-label="Footer navigation" class="footer-nav">
+        <a href="landing.html">Home</a>
+        <a href="index.html">Dashboard</a>
+        <a href="search.html">Job Search</a>
+        <a href="applications.html">Applications</a>
+        <a href="analytics.html">Analytics</a>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>
