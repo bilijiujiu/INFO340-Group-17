@@ -1,16 +1,38 @@
-# React + Vite
+# JobTrack
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React app that helps college students manage saved jobs, applications, notes,
+deadlines, and follow-up tasks in one place — built for INFO 340 at the
+University of Washington.
 
-Currently, two official plugins are available:
+## Links
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Live site**: https://job-tracking-15d99.web.app
+- **Repo**: https://github.com/bilijiujiu/INFO340-Group-17
 
-## React Compiler
+## Team
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+INFO 340 Group 17 — Peitong Qi, Siyuan (Shea) Li.
 
-## Expanding the ESLint configuration
+## Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React 19 + React Router
+- Vite (build + dev server)
+- Firebase Hosting
+
+## Local development
+
+```bash
+npm install
+npm run dev      # start the dev server (http://localhost:5173)
+npm run build    # produce a production build in dist/
+npm run preview  # serve the production build locally
+```
+
+## Deploying to Firebase
+
+```bash
+npm run build
+npx firebase deploy --only hosting
+```
+
+Requires a one-time `npx firebase login` per machine.
