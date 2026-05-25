@@ -6,6 +6,7 @@ import JobSearchPage from './components/JobSearchPage'
 import ApplicationsPage from './components/ApplicationsPage'
 import AnalyticsPage from './components/AnalyticsPage'
 import OnboardingPage from './components/OnboardingPage'
+import JobDetailPage from './components/JobDetailPage'
 
 function AppLayout() {
   const { pathname } = useLocation()
@@ -18,6 +19,7 @@ function AppLayout() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/job-search" element={<JobSearchPage />} />
+        <Route path="/job/:id" element={<JobDetailPage />} />
         <Route path="/applications" element={<ApplicationsPage />} />
         <Route path="/analytics" element={<AnalyticsPage />} />
         <Route path="/onboarding" element={<OnboardingPage />} />
