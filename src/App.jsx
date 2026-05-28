@@ -8,13 +8,21 @@ import AnalyticsPage from './components/AnalyticsPage'
 import OnboardingPage from './components/OnboardingPage'
 import JobDetailPage from './components/JobDetailPage'
 
+const navLinks = [
+  { to: '/', label: 'Home' },
+  { to: '/dashboard', label: 'Dashboard' },
+  { to: '/job-search', label: 'Job Search' },
+  { to: '/applications', label: 'Applications' },
+  { to: '/analytics', label: 'Analytics' },
+]
+
 function AppLayout() {
   const { pathname } = useLocation()
   const showNav = pathname !== '/onboarding'
 
   return (
     <>
-      {showNav && <Navbar />}
+      {showNav && <Navbar links={navLinks} />}
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
@@ -24,7 +32,7 @@ function AppLayout() {
         <Route path="/analytics" element={<AnalyticsPage />} />
         <Route path="/onboarding" element={<OnboardingPage />} />
       </Routes>
-      {showNav && <SiteFooter />}
+      {showNav && <SiteFooter links={navLinks} />}
     </>
   )
 }
