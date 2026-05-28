@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router'
 import Navbar, { SiteFooter } from './components/Navbar'
 import LandingPage from './components/LandingPage'
 import DashboardPage from './components/DashboardPage'

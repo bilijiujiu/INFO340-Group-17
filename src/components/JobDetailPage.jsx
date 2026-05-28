@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router'
 import { getJobById } from '../data/jobs'
 
 const statusOptions = ['Saved', 'Applied', 'Interview', 'Offer', 'Rejected']
