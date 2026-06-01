@@ -93,6 +93,10 @@ export default function JobSearchPage() {
     filters.sponsorship !== '' ||
     filters.sortBy !== 'relevance'
 
+  const jobCards = filteredJobs.map((job) => (
+    <JobCard key={job.id} job={job} />
+  ))
+
   return (
     <main className="container">
       <div className="search-layout">
@@ -211,9 +215,7 @@ export default function JobSearchPage() {
             </div>
           ) : (
             <div className="job-grid">
-              {filteredJobs.map((job) => (
-                <JobCard key={job.id} job={job} />
-              ))}
+              {jobCards}
             </div>
           )}
         </section>

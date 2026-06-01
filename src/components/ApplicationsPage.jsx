@@ -28,6 +28,32 @@ const columns = [
 ]
 
 export default function ApplicationsPage() {
+  const kanbanColumns = columns.map((column) => {
+    const cards = column.cards.map((card) => {
+      const roleLines = card.role.map((line, i) => (
+        <span key={line}>
+          {line}
+          {i < card.role.length - 1 && <br />}
+        </span>
+      ))
+
+      return (
+        <div key={card.company} className="job-card">
+          <h3 className="job-company">{card.company}</h3>
+          <p className="job-role">{roleLines}</p>
+        </div>
+      )
+    })
+
+    return (
+      <article key={column.title} className="column">
+        <header className="column-header">{column.title}</header>
+        {cards}
+        <div className="add-card">+ Add card</div>
+      </article>
+    )
+  })
+
   return (
     <div className="page-wrapper">
       <main className="main-content">
@@ -37,25 +63,7 @@ export default function ApplicationsPage() {
         </header>
 
         <section className="kanban">
-          {columns.map((column) => (
-            <article key={column.title} className="column">
-              <header className="column-header">{column.title}</header>
-              {column.cards.map((card) => (
-                <div key={card.company} className="job-card">
-                  <h3 className="job-company">{card.company}</h3>
-                  <p className="job-role">
-                    {card.role.map((line, i) => (
-                      <span key={line}>
-                        {line}
-                        {i < card.role.length - 1 && <br />}
-                      </span>
-                    ))}
-                  </p>
-                </div>
-              ))}
-              <div className="add-card">+ Add card</div>
-            </article>
-          ))}
+          {kanbanColumns}
         </section>
       </main>
     </div>

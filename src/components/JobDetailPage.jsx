@@ -20,48 +20,54 @@ function JobMeta({ job }) {
     { label: 'Source', value: job.source },
     { label: 'Type', value: job.type },
   ]
+  const metaItems = items.map(({ label, value }) => (
+    <li key={label}>
+      <strong>{label}:</strong> {value}
+    </li>
+  ))
+
   return (
     <ul className="detail-meta">
-      {items.map(({ label, value }) => (
-        <li key={label}>
-          <strong>{label}:</strong> {value}
-        </li>
-      ))}
+      {metaItems}
     </ul>
   )
 }
 
 function StatusPills({ current }) {
+  const statusButtons = statusOptions.map((status) => (
+    <button
+      key={status}
+      type="button"
+      className={`status-pill ${status === current ? 'active' : ''}`}
+    >
+      {status}
+    </button>
+  ))
+
   return (
     <div className="status-group">
-      {statusOptions.map((status) => (
-        <button
-          key={status}
-          type="button"
-          className={`status-pill ${status === current ? 'active' : ''}`}
-        >
-          {status}
-        </button>
-      ))}
+      {statusButtons}
     </div>
   )
 }
 
 function TaskList({ tasks }) {
+  const taskItems = tasks.map((task) => (
+    <li key={task.id}>
+      <label htmlFor={`task-${task.id}`}>
+        <input
+          type="checkbox"
+          id={`task-${task.id}`}
+          defaultChecked={task.done}
+        />
+        {' '}{task.label}
+      </label>
+    </li>
+  ))
+
   return (
     <ul className="task-list">
-      {tasks.map((task) => (
-        <li key={task.id}>
-          <label htmlFor={`task-${task.id}`}>
-            <input
-              type="checkbox"
-              id={`task-${task.id}`}
-              defaultChecked={task.done}
-            />
-            {' '}{task.label}
-          </label>
-        </li>
-      ))}
+      {taskItems}
     </ul>
   )
 }
@@ -83,6 +89,10 @@ export default function JobDetailPage() {
     )
   }
 
+  const descriptionParagraphs = job.description.map((para, i) => (
+    <p key={i}>{para}</p>
+  ))
+
   return (
     <main className="container">
       <div className="detail-layout">
@@ -93,9 +103,7 @@ export default function JobDetailPage() {
           <JobMeta job={job} />
 
           <div className="detail-description" aria-label="Job description">
-            {job.description.map((para, i) => (
-              <p key={i}>{para}</p>
-            ))}
+            {descriptionParagraphs}
           </div>
 
           {job.image && (
