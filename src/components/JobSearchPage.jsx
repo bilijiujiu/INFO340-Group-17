@@ -100,7 +100,7 @@ export default function JobSearchPage() {
   return (
     <main className="container">
       <div className="search-layout">
-        <aside className="filter-panel" aria-label="Job filters">
+        <aside className="filter-panel">
           <div className="filter-panel-header">
             <h2>Filters</h2>
             {hasActiveFilter && (
@@ -174,7 +174,7 @@ export default function JobSearchPage() {
           </form>
         </aside>
 
-        <section className="search-main" aria-label="Job listings">
+        <section className="search-main">
           <div className="search-bar" role="search">
             <label htmlFor="job-search-input" className="sr-only">Search jobs</label>
             <input

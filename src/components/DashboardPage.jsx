@@ -4,7 +4,7 @@ export default function DashboardPage() {
   return (
     <main className="container">
       <section className="dashboard-content">
-        <section className="welcome-section" aria-label="Welcome message">
+        <section className="welcome-section">
           <div>
             <h1>Welcome back!</h1>
             <p>You have 3 jobs that need attention this week.</p>
@@ -12,7 +12,7 @@ export default function DashboardPage() {
           <Link className="btn btn-outline btn-welcome" to="/job-search">Browse Jobs</Link>
         </section>
 
-        <section aria-label="Application summary" className="summary-grid">
+        <div className="summary-grid">
           <article className="summary-card">
             <p className="card-number">48</p>
             <p className="card-label">Saved Jobs</p>
@@ -29,9 +29,9 @@ export default function DashboardPage() {
             <p className="card-number">2</p>
             <p className="card-label">Offers</p>
           </article>
-        </section>
+        </div>
 
-        <section className="dashboard-panel" aria-label="Recent applications">
+        <section className="dashboard-panel">
           <h2>Recent Applications</h2>
           <table className="data-table">
             <thead>
@@ -77,7 +77,7 @@ export default function DashboardPage() {
           </table>
         </section>
 
-        <section aria-label="Quick insights" className="insights-grid">
+        <div className="insights-grid">
           <article className="dashboard-panel insight-card">
             <h3>Top City</h3>
             <p className="insight-value">Seattle</p>
@@ -94,7 +94,7 @@ export default function DashboardPage() {
             <h3>Next Deadline</h3>
             <p className="insight-value">Amazon · Apr 18</p>
           </article>
-        </section>
+        </div>
       </section>
     </main>
   )

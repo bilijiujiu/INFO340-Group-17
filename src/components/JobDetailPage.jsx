@@ -96,13 +96,13 @@ export default function JobDetailPage() {
   return (
     <main className="container">
       <div className="detail-layout">
-        <section className="detail-panel" aria-label="Job details">
+        <section className="detail-panel">
           <p className="detail-company">{job.company}</p>
           <h1 className="detail-role">{job.title}</h1>
 
           <JobMeta job={job} />
 
-          <div className="detail-description" aria-label="Job description">
+          <div className="detail-description">
             {descriptionParagraphs}
           </div>
 
@@ -117,7 +117,7 @@ export default function JobDetailPage() {
           </Link>
         </section>
 
-        <section className="detail-panel" aria-label="Application workspace">
+        <section className="detail-panel">
           <h2 className="workspace-title">Workspace</h2>
 
           <h3 className="subsection-title">Status</h3>
