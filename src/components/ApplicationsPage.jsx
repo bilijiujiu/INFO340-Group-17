@@ -49,7 +49,9 @@ export default function ApplicationsPage() {
       <article key={column.title} className="column">
         <header className="column-header">{column.title}</header>
         {cards}
-        <div className="add-card">+ Add card</div>
+        <button type="button" className="add-card">
+          Add card
+        </button>
       </article>
     )
   })

@@ -67,3 +67,24 @@
   margin: 0;
   font-size: 0.95rem;
 }
+
+/* --- Application board action cleanup --- */
+.column .add-card {
+  width: 100%;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 700;
+  text-align: center;
+}
+
+.column .add-card:hover,
+.column .add-card:focus-visible {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: rgba(47, 94, 255, 0.08);
+}
