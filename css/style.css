@@ -1206,11 +1206,8 @@ p {
 }
 
 .app-frame .sidebar {
-  min-height: 100vh;
   background: var(--color-surface);
-  border-right: 1px solid var(--color-border);
   border-radius: 0;
-  padding: 2rem 1.4rem;
 }
 
 .app-frame .brand {
@@ -1253,7 +1250,7 @@ p {
 }
 
 .main-content {
-  padding: 2rem 2.5rem;
+  padding: 1.5rem;
   background: var(--color-bg);
 }
 
@@ -1261,9 +1258,11 @@ p {
 
 .page-header {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.6rem;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .page-title {
@@ -1272,6 +1271,7 @@ p {
   font-weight: 800;
   letter-spacing: -0.04em;
   margin: 0;
+  white-space: normal;
 }
 
 .btn-add-job {
@@ -1292,14 +1292,15 @@ p {
 
 .kanban {
   display: grid;
-  grid-template-columns: repeat(5, minmax(170px, 1fr));
-  gap: 1rem;
-  overflow-x: auto;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  width: 100%;
   padding-bottom: 1rem;
 }
 
 .column {
-  min-height: 500px;
+  min-width: 100%;
+  min-height: auto;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -1785,151 +1786,70 @@ p {
   outline: none;
 }
 
-/* ---------- Responsive fixes ---------- */
+/* App shell layout — mobile-first base */
 
-@media (max-width: 991px) {
-  .kanban {
-    grid-template-columns: repeat(3, minmax(190px, 1fr));
-  }
-
-  .main-content {
-    padding: 1.7rem 1.5rem;
-  }
-}
-
-@media (max-width: 767px) {
-  .app-frame .sidebar {
-    min-height: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .nav-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .nav-list li {
-    margin-bottom: 0;
-  }
-
-  .page-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .kanban {
-    grid-template-columns: 1fr;
-  }
-
-  .column {
-    min-height: auto;
-  }
-
-  .form-card {
-    padding: 1.5rem;
-  }
-
-  .form-actions {
-    flex-direction: column-reverse;
-    align-items: stretch;
-  }
-
-  .btn-submit,
-  .btn-skip {
-    width: 100%;
-    text-align: center;
-  }
-}
-
-
-/* Only the OUTER Bootstrap row should control the page layout */
 .app-frame > .row.g-0 {
   display: flex;
+  flex-direction: column;
   flex-wrap: nowrap;
   width: 100%;
   min-height: 100vh;
 }
 
-/* IMPORTANT: inner Bootstrap rows in Analytics should NOT be full screen */
 .app-frame .main-content .row {
   min-height: 0 !important;
   height: auto !important;
 }
 
-/* Prevent page-level horizontal overflow */
 html,
 body {
   width: 100%;
   overflow-x: hidden;
 }
 
-/* Sidebar */
 .app-frame .sidebar {
-  flex: 0 0 240px !important;
-  width: 240px !important;
-  max-width: 240px !important;
-  min-height: 100vh;
-  background: #ffffff;
-  border-right: 1px solid var(--color-border);
-  border-radius: 0;
-  padding: 2rem 1.4rem;
+  width: 100%;
+  max-width: 100%;
+  min-height: auto;
+  border-right: none;
+  border-bottom: 1px solid var(--color-border);
+  padding: 1.5rem 1.4rem;
 }
 
-/* Main content area */
 .app-frame .main-content {
-  flex: 1 1 auto !important;
-  width: calc(100% - 240px) !important;
-  max-width: calc(100% - 240px) !important;
-  min-height: 100vh;
-  padding: 2.5rem 3rem;
-  background: var(--color-bg);
-  overflow-x: auto;
+  width: 100%;
+  max-width: 100%;
 }
 
-/* Fix Applications header */
-.page-header {
+.nav-list {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
-.page-title {
-  white-space: nowrap;
+.nav-list li {
+  margin-bottom: 0;
 }
 
-/* Applications board: scroll horizontally inside content, not behind sidebar */
-.kanban {
-  display: grid;
-  grid-template-columns: repeat(5, 220px);
-  gap: 1.25rem;
-  width: max-content;
-  min-width: 100%;
-  overflow: visible;
-  padding-bottom: 1rem;
+.form-card {
+  padding: 1.5rem;
 }
 
-/* Applications columns */
-.column {
-  min-width: 220px;
-  min-height: 540px;
-  background: #ffffff;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: 1rem;
-  box-shadow: var(--shadow-sm);
+.form-actions {
+  flex-direction: column-reverse;
+  align-items: stretch;
 }
 
-/* Analytics: keep sections close together */
+.btn-submit,
+.btn-skip {
+  width: 100%;
+  text-align: center;
+}
+
 .main-content > section {
   margin-bottom: 1rem !important;
 }
 
-/* Analytics KPI cards */
 .kpi-tile {
   min-height: 110px;
   display: flex;
@@ -1937,49 +1857,92 @@ body {
   justify-content: center;
 }
 
-/* Analytics panels should appear directly under KPIs */
 .panel {
   min-height: 360px;
 }
 
-/* Make filters normal height */
 .filter-input {
   height: 48px;
 }
 
-/* Mobile fix */
-@media (max-width: 767px) {
-  .app-frame > .row.g-0 {
-    flex-direction: column;
-  }
-
-  .app-frame .sidebar {
-    flex: none !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-height: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .app-frame .main-content {
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 1.5rem;
+/* App shell — tablet (768px+, Bootstrap md) */
+@media (min-width: 768px) {
+  .main-content {
+    padding: 1.7rem 1.5rem;
   }
 
   .kanban {
-    grid-template-columns: 1fr;
-    width: 100%;
+    grid-template-columns: repeat(3, minmax(190px, 1fr));
   }
 
-  .column {
-    min-width: 100%;
-    min-height: auto;
+  .form-card {
+    padding: 2.2rem;
+  }
+
+  .form-actions {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .btn-submit,
+  .btn-skip {
+    width: auto;
+    text-align: inherit;
+  }
+}
+
+/* App shell — desktop (992px+, Bootstrap lg) */
+@media (min-width: 992px) {
+  .app-frame > .row.g-0 {
+    flex-direction: row;
+  }
+
+  .app-frame .sidebar {
+    flex: 0 0 240px;
+    width: 240px;
+    max-width: 240px;
+    min-height: 100vh;
+    border-right: 1px solid var(--color-border);
+    border-bottom: none;
+    padding: 2rem 1.4rem;
+  }
+
+  .app-frame .main-content {
+    flex: 1 1 auto;
+    width: calc(100% - 240px);
+    max-width: calc(100% - 240px);
+    min-height: 100vh;
+    padding: 2.5rem 3rem;
+    overflow-x: auto;
+  }
+
+  .nav-list {
+    display: block;
+  }
+
+  .nav-list li {
+    margin-bottom: 0.45rem;
   }
 
   .page-header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .page-title {
+    white-space: nowrap;
+  }
+
+  .kanban {
+    grid-template-columns: repeat(5, 220px);
+    width: max-content;
+    min-width: 100%;
+    overflow: visible;
+  }
+
+  .column {
+    min-width: 220px;
+    min-height: 540px;
   }
 }
