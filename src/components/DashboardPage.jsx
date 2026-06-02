@@ -1,6 +1,78 @@
 import { Link } from 'react-router'
 
+const summaryStats = [
+  { count: '48', label: 'Saved Jobs' },
+  { count: '23', label: 'Applied' },
+  { count: '7', label: 'Interviews' },
+  { count: '2', label: 'Offers' },
+]
+
+const recentApplications = [
+  { company: 'Google', role: 'SWE Intern', status: 'Interview', statusClass: 'interview', date: 'Apr 10' },
+  { company: 'Stripe', role: 'Frontend Engineer', status: 'Applied', statusClass: 'applied', date: 'Apr 8' },
+  { company: 'Airbnb', role: 'UX Designer', status: 'Saved', statusClass: 'saved', date: 'Apr 5' },
+  { company: 'Meta', role: 'Data Analyst', status: 'Offer', statusClass: 'offer', date: 'Apr 1' },
+  { company: 'Amazon', role: 'SDE Intern', status: 'Rejected', statusClass: 'rejected', date: 'Mar 28' },
+]
+
+const insights = [
+  { title: 'Top City', value: 'Seattle' },
+  { title: 'Response Rate', value: '48%' },
+  { title: 'Average Wait', value: '12 days' },
+  { title: 'Next Deadline', value: 'Amazon · Apr 18' },
+]
+
+function SummaryCard({ count, label }) {
+  return (
+    <article className="summary-card">
+      <p className="card-number">{count}</p>
+      <p className="card-label">{label}</p>
+    </article>
+  )
+}
+
+function ApplicationRow({ company, role, status, statusClass, date }) {
+  return (
+    <tr>
+      <td>{company}</td>
+      <td>{role}</td>
+      <td>
+        <span className={`status-badge ${statusClass}`}>{status}</span>
+      </td>
+      <td>{date}</td>
+    </tr>
+  )
+}
+
+function InsightCard({ title, value }) {
+  return (
+    <article className="dashboard-panel insight-card">
+      <h3>{title}</h3>
+      <p className="insight-value">{value}</p>
+    </article>
+  )
+}
+
 export default function DashboardPage() {
+  const summaryCards = summaryStats.map((stat) => (
+    <SummaryCard key={stat.label} count={stat.count} label={stat.label} />
+  ))
+
+  const applicationRows = recentApplications.map((application) => (
+    <ApplicationRow
+      key={application.company}
+      company={application.company}
+      role={application.role}
+      status={application.status}
+      statusClass={application.statusClass}
+      date={application.date}
+    />
+  ))
+
+  const insightCards = insights.map((item) => (
+    <InsightCard key={item.title} title={item.title} value={item.value} />
+  ))
+
   return (
     <main className="container">
       <section className="dashboard-content">
@@ -13,22 +85,7 @@ export default function DashboardPage() {
         </section>
 
         <div className="summary-grid">
-          <article className="summary-card">
-            <p className="card-number">48</p>
-            <p className="card-label">Saved Jobs</p>
-          </article>
-          <article className="summary-card">
-            <p className="card-number">23</p>
-            <p className="card-label">Applied</p>
-          </article>
-          <article className="summary-card">
-            <p className="card-number">7</p>
-            <p className="card-label">Interviews</p>
-          </article>
-          <article className="summary-card">
-            <p className="card-number">2</p>
-            <p className="card-label">Offers</p>
-          </article>
+          {summaryCards}
         </div>
 
         <section className="dashboard-panel">
@@ -43,57 +100,13 @@ export default function DashboardPage() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Google</td>
-                <td>SWE Intern</td>
-                <td><span className="status-badge interview">Interview</span></td>
-                <td>Apr 10</td>
-              </tr>
-              <tr>
-                <td>Stripe</td>
-                <td>Frontend Engineer</td>
-                <td><span className="status-badge applied">Applied</span></td>
-                <td>Apr 8</td>
-              </tr>
-              <tr>
-                <td>Airbnb</td>
-                <td>UX Designer</td>
-                <td><span className="status-badge saved">Saved</span></td>
-                <td>Apr 5</td>
-              </tr>
-              <tr>
-                <td>Meta</td>
-                <td>Data Analyst</td>
-                <td><span className="status-badge offer">Offer</span></td>
-                <td>Apr 1</td>
-              </tr>
-              <tr>
-                <td>Amazon</td>
-                <td>SDE Intern</td>
-                <td><span className="status-badge rejected">Rejected</span></td>
-                <td>Mar 28</td>
-              </tr>
+              {applicationRows}
             </tbody>
           </table>
         </section>
 
         <div className="insights-grid">
-          <article className="dashboard-panel insight-card">
-            <h3>Top City</h3>
-            <p className="insight-value">Seattle</p>
-          </article>
-          <article className="dashboard-panel insight-card">
-            <h3>Response Rate</h3>
-            <p className="insight-value">48%</p>
-          </article>
-          <article className="dashboard-panel insight-card">
-            <h3>Average Wait</h3>
-            <p className="insight-value">12 days</p>
-          </article>
-          <article className="dashboard-panel insight-card">
-            <h3>Next Deadline</h3>
-            <p className="insight-value">Amazon · Apr 18</p>
-          </article>
+          {insightCards}
         </div>
       </section>
     </main>
