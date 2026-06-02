@@ -1,6 +1,5 @@
 @import '../css/style.css';
 
-/* --- JobSearch filter additions --- */
 .filter-panel-header {
   display: flex;
   align-items: baseline;
@@ -67,7 +66,18 @@
   font-size: 0.95rem;
 }
 
-/* --- Application board action cleanup --- */
+.loc-fill-w75 {
+  width: 75%;
+}
+
+.loc-fill-w45 {
+  width: 45%;
+}
+
+.loc-fill-w30 {
+  width: 30%;
+}
+
 .column .add-card {
   width: 100%;
   border: 1px dashed var(--color-border);

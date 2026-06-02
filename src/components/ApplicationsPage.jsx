@@ -27,34 +27,50 @@ const columns = [
   },
 ]
 
+function JobKanbanCard({ company, role }) {
+  const roleLines = role.map((line, i) => (
+    <span key={line}>
+      {line}
+      {i < role.length - 1 && <br />}
+    </span>
+  ))
+
+  return (
+    <div className="job-card">
+      <h3 className="job-company">{company}</h3>
+      <p className="job-role">{roleLines}</p>
+    </div>
+  )
+}
+
+function ApplicationColumn({ title, cards }) {
+  const cardElements = cards.map((card) => (
+    <JobKanbanCard
+      key={card.company}
+      company={card.company}
+      role={card.role}
+    />
+  ))
+
+  return (
+    <article className="column">
+      <header className="column-header">{title}</header>
+      {cardElements}
+      <button type="button" className="add-card">
+        Add card
+      </button>
+    </article>
+  )
+}
+
 export default function ApplicationsPage() {
-  const kanbanColumns = columns.map((column) => {
-    const cards = column.cards.map((card) => {
-      const roleLines = card.role.map((line, i) => (
-        <span key={line}>
-          {line}
-          {i < card.role.length - 1 && <br />}
-        </span>
-      ))
-
-      return (
-        <div key={card.company} className="job-card">
-          <h3 className="job-company">{card.company}</h3>
-          <p className="job-role">{roleLines}</p>
-        </div>
-      )
-    })
-
-    return (
-      <article key={column.title} className="column">
-        <header className="column-header">{column.title}</header>
-        {cards}
-        <button type="button" className="add-card">
-          Add card
-        </button>
-      </article>
-    )
-  })
+  const kanbanColumns = columns.map((column) => (
+    <ApplicationColumn
+      key={column.title}
+      title={column.title}
+      cards={column.cards}
+    />
+  ))
 
   return (
     <div className="page-wrapper">

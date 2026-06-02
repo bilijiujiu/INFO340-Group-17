@@ -1,4 +1,19 @@
+const locations = [
+  { city: 'SF, CA', fillClass: 'loc-fill-w75' },
+  { city: 'LA, CA', fillClass: 'loc-fill-w45' },
+  { city: 'New York', fillClass: 'loc-fill-w30' },
+]
+
 export default function AnalyticsPage() {
+  const locationBars = locations.map((loc) => (
+    <div key={loc.city}>
+      <p className="loc-label">{loc.city}</p>
+      <div className="loc-track">
+        <div className={`loc-fill ${loc.fillClass}`}></div>
+      </div>
+    </div>
+  ))
+
   return (
     <div className="page-wrapper">
       <main className="main-content">
@@ -84,18 +99,7 @@ export default function AnalyticsPage() {
           <div className="col-12 col-md-6">
             <article className="panel">
               <h3 className="panel-title">Top Locations</h3>
-              <p className="loc-label">SF, CA</p>
-              <div className="loc-track">
-                <div className="loc-fill" style={{ width: '75%' }}></div>
-              </div>
-              <p className="loc-label">LA, CA</p>
-              <div className="loc-track">
-                <div className="loc-fill" style={{ width: '45%' }}></div>
-              </div>
-              <p className="loc-label">New York</p>
-              <div className="loc-track">
-                <div className="loc-fill" style={{ width: '30%' }}></div>
-              </div>
+              {locationBars}
               <ul className="loc-axis">
                 <li>10%</li>
                 <li>15%</li>
