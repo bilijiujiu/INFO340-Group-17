@@ -1030,10 +1030,6 @@ p {
   margin-bottom: 1.25rem;
 }
 
-.analytics-image {
-  padding-top: 2rem;
-}
-
 /* ================================================================
    RESPONSIVE: Medium screens (tablets, 768px+)
    ================================================================ */
@@ -1739,6 +1735,54 @@ p {
 .onboarding-footer p {
   color: #9ca3af;
   font-size: 0.9rem;
+}
+
+/* Onboarding */
+
+.onboarding-form fieldset.choice-group {
+  border: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.onboarding-form fieldset.choice-group legend {
+  float: none;
+  width: auto;
+  margin-bottom: 0.65rem;
+}
+
+.onboarding-form fieldset.choice-group div {
+  display: inline-block;
+  margin: 0 1rem 0.5rem 0;
+}
+
+.onboarding-form fieldset.choice-group input:checked + label {
+  color: var(--color-primary-dark);
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+.onboarding-form fieldset.choice-group label {
+  color: var(--color-muted);
+  font-weight: 600;
+  margin-left: 0.35rem;
+}
+
+.onboarding-form textarea.notes-field {
+  width: 100%;
+  min-height: 6rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.onboarding-form textarea.notes-field:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  outline: none;
 }
 
 /* ---------- Responsive fixes ---------- */

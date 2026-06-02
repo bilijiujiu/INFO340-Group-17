@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Peitong Qi, Siyuan Li">
   <title>JobTrack — Welcome</title>
 
   <!-- Bootstrap 5 (loaded first so our own rules can override) -->
@@ -16,13 +17,11 @@
 
   <div class="onboarding-wrapper">
 
-    <!-- Header -->
     <header class="onboarding-header">
       <h1 class="brand-mark">JobTrack</h1>
       <p class="welcome-line">Welcome! Let's set up your job search.</p>
     </header>
 
-    <!-- Form card -->
     <main class="form-card">
 
       <h2 class="form-title">Tell us about yourself</h2>
@@ -32,7 +31,6 @@
 
       <form class="onboarding-form" action="Applications.html" method="get">
 
-        <!-- ===== Section 1: Basic info ===== -->
         <fieldset class="form-section">
           <legend class="section-legend">Basic Info</legend>
 
@@ -51,7 +49,6 @@
           </div>
         </fieldset>
 
-        <!-- ===== Section 2: Job preferences ===== -->
         <fieldset class="form-section">
           <legend class="section-legend">Job Preferences</legend>
 
@@ -73,8 +70,9 @@
               <label for="locations" class="form-label">Target Locations</label>
               <input type="text" id="locations" name="locations"
                      class="form-control"
+                     aria-describedby="locations-hint"
                      placeholder="e.g. Seattle, SF, NYC">
-              <small class="form-help">Separate multiple cities with commas</small>
+              <small id="locations-hint" class="form-help">Separate multiple cities with commas</small>
             </div>
           </div>
 
@@ -82,12 +80,12 @@
             <div class="col-6 col-md-3">
               <label for="salary-min" class="form-label">Min Salary (per hr)</label>
               <input type="number" id="salary-min" name="salary-min"
-                     class="form-control" placeholder="40" min="0">
+                     class="form-control" placeholder="40" min="0" max="200" value="40">
             </div>
             <div class="col-6 col-md-3">
               <label for="salary-max" class="form-label">Max Salary (per hr)</label>
               <input type="number" id="salary-max" name="salary-max"
-                     class="form-control" placeholder="80" min="0">
+                     class="form-control" placeholder="80" min="0" max="200" value="80">
             </div>
 
             <div class="col-12 col-md-6">
@@ -100,42 +98,60 @@
               </select>
             </div>
           </div>
+
+          <fieldset class="choice-group">
+            <legend class="form-label">Work format (optional)</legend>
+            <div>
+              <input type="checkbox" id="format-remote" name="format" value="remote">
+              <label for="format-remote">Remote</label>
+            </div>
+            <div>
+              <input type="checkbox" id="format-hybrid" name="format" value="hybrid">
+              <label for="format-hybrid">Hybrid</label>
+            </div>
+            <div>
+              <input type="checkbox" id="format-onsite" name="format" value="onsite">
+              <label for="format-onsite">On-site</label>
+            </div>
+          </fieldset>
         </fieldset>
 
-        <!-- ===== Section 3: Background ===== -->
         <fieldset class="form-section">
           <legend class="section-legend">Background</legend>
 
-          <p class="form-label">Education Level</p>
-          <div class="radio-group">
-            <label class="radio-option">
-              <input type="radio" name="education" value="bachelor" required>
-              <span>Bachelor's</span>
-            </label>
-            <label class="radio-option">
-              <input type="radio" name="education" value="master">
-              <span>Master's</span>
-            </label>
-            <label class="radio-option">
-              <input type="radio" name="education" value="phd">
-              <span>PhD</span>
-            </label>
-          </div>
+          <fieldset class="choice-group">
+            <legend class="form-label">Education Level</legend>
+            <div>
+              <input type="radio" id="edu-bachelor" name="education" value="bachelor" required>
+              <label for="edu-bachelor">Bachelor's</label>
+            </div>
+            <div>
+              <input type="radio" id="edu-master" name="education" value="master">
+              <label for="edu-master">Master's</label>
+            </div>
+            <div>
+              <input type="radio" id="edu-phd" name="education" value="phd">
+              <label for="edu-phd">PhD</label>
+            </div>
+          </fieldset>
 
-          <p class="form-label mt-3">Need Visa Sponsorship?</p>
-          <div class="radio-group">
-            <label class="radio-option">
-              <input type="radio" name="visa" value="yes" required>
-              <span>Yes</span>
-            </label>
-            <label class="radio-option">
-              <input type="radio" name="visa" value="no">
-              <span>No</span>
-            </label>
-          </div>
+          <fieldset class="choice-group">
+            <legend class="form-label">Need Visa Sponsorship?</legend>
+            <div>
+              <input type="radio" id="visa-yes" name="visa" value="yes" required>
+              <label for="visa-yes">Yes</label>
+            </div>
+            <div>
+              <input type="radio" id="visa-no" name="visa" value="no">
+              <label for="visa-no">No</label>
+            </div>
+          </fieldset>
+
+          <label for="notes" class="form-label">Notes (optional)</label>
+          <textarea id="notes" name="notes" class="form-control notes-field" rows="4"
+                    placeholder="e.g. target companies or timeline"></textarea>
         </fieldset>
 
-        <!-- ===== Submit row ===== -->
         <div class="form-actions">
           <a href="Applications.html" class="btn-skip">Skip for now</a>
           <button type="submit" class="btn-submit">Get Started →</button>
