@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Creates remaining assignment issues on GitHub.
-# Run once after: gh auth login
+# Creates final-project rubric gap issues on GitHub.
+# Run once after: gh auth login -h github.com
 
 set -euo pipefail
 
@@ -12,126 +12,160 @@ if ! command -v gh >/dev/null 2>&1; then
 fi
 
 if ! gh auth status >/dev/null 2>&1; then
-  echo "Not logged in. Run first: gh auth login"
+  echo "Not logged in. Run first: gh auth login -h github.com"
   exit 1
 fi
 
-echo "Creating issues on $REPO ..."
+echo "Creating final-project issues on $REPO ..."
 
 gh issue create --repo "$REPO" \
-  --title "[Feature] Add interactive job application form with React state" \
+  --title "[Final Rubric] Add Firebase Realtime Database persistence" \
   --body "$(cat <<'EOF'
-## Summary
-Implement at least one working interactive feature that satisfies the **state + event + rerender** requirement (Assignment Step 3).
+## Why
+The final project requires Firebase Realtime Database integration. Hosting config exists, but the app does not currently read from or write to Firebase data.
 
-## Requirements
-- [ ] Add a controlled form on the Applications page (triggered by "+ Add Job" button)
-- [ ] Form fields: company, role, status (Saved / Applied / Interview / Offer / Rejected)
-- [ ] Store submitted applications in React `useState`
-- [ ] On submit, new application appears in the Kanban board without page reload
-- [ ] Form validates required fields before submit
+## Tasks
+- [ ] Install the firebase client SDK.
+- [ ] Add a Firebase config module, such as src/firebase.js.
+- [ ] Use Realtime Database, not Firestore.
+- [ ] Read meaningful app data with useEffect and a database listener.
+- [ ] Write user-created or user-edited data to the database.
+- [ ] Show in-page loading feedback during async database reads/writes.
+- [ ] Catch Firebase errors and render user-visible error messages.
+- [ ] Handle the empty database state gracefully.
 
-## Suggested approach
-- Use controlled inputs (`value` + `onChange`)
-- Append new application to state array on form submit
-- Re-render Kanban columns using updated state
-
-## Acceptance criteria
-- User can add a new job application through the UI
-- New card appears immediately after submit
-- Demonstrates state → event → rerender flow
-
-## Related files
-- `src/components/ApplicationsPage.jsx`
+## Acceptance Criteria
+- package.json includes firebase.
+- The app reads at least one meaningful dataset from Realtime Database.
+- The app writes at least one meaningful user interaction to Realtime Database.
+- No Firebase errors are silently swallowed or shown with alert().
+- npm run lint and npm run build pass.
 EOF
 )"
 
 gh issue create --repo "$REPO" \
-  --title "[Refactor] Use props and .map() for application cards" \
+  --title "[Final Rubric] Make Applications page a complete interactive Kanban feature" \
   --body "$(cat <<'EOF'
-## Summary
-Do not hard-code every application card. Use a data array + `.map()` + props as required by the assignment (Step 4).
+## Why
+The Applications page currently displays static columns, and the + Add Job / Add card buttons do not change app state. The final rubric requires complete, purposeful, state-based interactive features.
 
-## Requirements
-- [ ] Define applications as a data array, e.g.:
-  ```js
-  const applications = [
-    { company: "Google", role: "Intern", status: "Applied" },
-    { company: "Amazon", role: "SDE Intern", status: "Interview" }
-  ];
-  ```
-- [ ] Create a reusable component (e.g. `ApplicationCard.jsx`) that receives data via **props**
-- [ ] Render cards/tables using `.map()` instead of manually writing each row/card
-- [ ] Apply to Applications page Kanban board
-- [ ] Apply to Dashboard "Recent Applications" table
+## Tasks
+- [ ] Store applications in React state loaded from Firebase.
+- [ ] Add a controlled form for creating an application.
+- [ ] Include fields such as company, role, location, deadline, and status.
+- [ ] Validate required fields in-page.
+- [ ] Render new applications immediately after submit.
+- [ ] Persist added applications to Firebase.
+- [ ] Allow users to update an application's status between Saved, Applied, Interview, Offer, and Rejected.
+- [ ] Make column counts derive from current application data instead of hard-coded numbers.
 
-## Optional
-- [ ] Filter or sort by status, company, or role
-
-## Acceptance criteria
-- No manually duplicated card/row JSX for each company
-- Components receive data through props
-- Lists rendered dynamically with `.map()`
-
-## Related files
-- `src/components/ApplicationsPage.jsx`
-- `src/components/DashboardPage.jsx`
-- `src/components/ApplicationCard.jsx` (new)
+## Acceptance Criteria
+- + Add Job opens or reveals a working form.
+- Submitting the form updates the Kanban board without a page reload.
+- Status changes update the displayed board and persist to Firebase.
+- Empty states and errors render in the page.
+- npm run lint and npm run build pass.
 EOF
 )"
 
 gh issue create --repo "$REPO" \
-  --title "[Deploy] Set up Firebase hosting and deploy live site" \
+  --title "[Final Rubric] Make Job Detail workspace stateful and persistent" \
   --body "$(cat <<'EOF'
-## Summary
-Deploy the React app to Firebase once core features are working (Assignment Step 5).
+## Why
+The Job Detail page has status buttons, notes, and tasks, but they are mostly static. This is a strong opportunity for a second complete interactive feature tied to the Applications data.
 
-## Requirements
-- [ ] Create Firebase project for JobTrack
-- [ ] Run `firebase init` (Hosting, public directory = `dist`)
-- [ ] Configure SPA rewrite rules for React Router (all routes → index.html)
-- [ ] Run `npm run build` successfully
-- [ ] Run `firebase deploy`
-- [ ] Update README with GitHub repo link and live Firebase website link
+## Tasks
+- [ ] Store the selected status in React state.
+- [ ] Make status pills update the current job/application status.
+- [ ] Save notes as controlled form input.
+- [ ] Persist notes to Firebase by job/application id.
+- [ ] Store tasks in React state instead of using defaultChecked.
+- [ ] Allow task completion toggles to update state and persist.
+- [ ] Add a controlled form for creating a new task.
+- [ ] Render save/loading/error feedback in-page.
 
-## Commands
-```bash
-npm run build
-firebase deploy
-```
-
-## Acceptance criteria
-- Live site loads at Firebase URL
-- All routes work (`/`, `/dashboard`, `/job-search`, `/applications`, `/analytics`, `/onboarding`)
-- README includes both submission links
-
-## Related files
-- `firebase.json` (new)
-- `.firebaserc` (new)
-- `README.md`
+## Acceptance Criteria
+- Clicking a status pill visibly updates the active status.
+- Saving a note persists it after refresh.
+- Checking a task updates state and persists it after refresh.
+- Adding a task changes the visible task list without reload.
+- The route parameter is used to load the correct workspace data.
 EOF
 )"
 
 gh issue create --repo "$REPO" \
-  --title "[Feature] Convert JobDetailPage and link from Job Search" \
+  --title "[Final Rubric] Add a third-party React chart library to Analytics" \
   --body "$(cat <<'EOF'
-## Summary
-Convert `Job_detail.html` into a React component and wire up navigation from Job Search.
+## Why
+The final rubric requires at least one third-party renderable React component/library beyond React Router and Firebase UI. Analytics is the most natural place to use one.
 
-## Requirements
-- [ ] Create `src/components/JobDetailPage.jsx` from `Job_detail.html`
-- [ ] Add route `/job-detail/:id` (or similar) in `App.jsx`
-- [ ] Connect "View Details" buttons on Job Search page to the new route
-- [ ] Keep existing Navbar layout consistent with other pages
+## Suggested Library
+Use Recharts for status distribution, application volume, or location charts.
 
-## Acceptance criteria
-- Clicking "View Details" on a job card navigates to the detail page
-- Detail page shows job info and workspace (notes, status, tasks)
+## Tasks
+- [ ] Install recharts.
+- [ ] Import chart components from recharts.
+- [ ] Replace the CSS-only donut or bar visuals with real React chart components.
+- [ ] Base chart data on current application/Firebase data when possible.
+- [ ] Keep chart text, labels, and colors accessible.
+- [ ] Add a useful empty state if there is no application data.
 
-## Related files
-- `Job_detail.html` (reference)
-- `src/components/JobSearchPage.jsx`
-- `src/App.jsx`
+## Acceptance Criteria
+- package.json includes a third-party React component library such as recharts.
+- Analytics page renders imported library components in the DOM.
+- Charts support the app's job tracking functionality, not just decoration.
+- npm run lint and npm run build pass.
+EOF
+)"
+
+gh issue create --repo "$REPO" \
+  --title "[Final Rubric] Move external CSS and libraries into the Vite import flow" \
+  --body "$(cat <<'EOF'
+## Why
+The final rubric says CSS files and libraries should be loaded through Vite/JavaScript imports. The current index.html links Google Fonts and Bootstrap directly.
+
+## Tasks
+- [ ] Remove Bootstrap CDN link from index.html.
+- [ ] Install Bootstrap with npm if Bootstrap classes are still needed.
+- [ ] Import Bootstrap CSS from src/main.jsx or src/index.css.
+- [ ] Move Google Font loading into CSS with @import, or use system fonts consistently.
+- [ ] Confirm index.html only contains required meta, favicon, title, root div, and Vite script.
+- [ ] Review src/index.css imports and simplify stylesheet organization if needed.
+
+## Acceptance Criteria
+- No Bootstrap CDN stylesheet is linked in index.html.
+- App styles still render correctly.
+- Vite build includes the required CSS.
+- npm run lint and npm run build pass.
+EOF
+)"
+
+gh issue create --repo "$REPO" \
+  --title "[Final Rubric] Clean repo structure and run final QA checklist" \
+  --body "$(cat <<'EOF'
+## Why
+The rubric expects a cleaned-up Vite React project with no extraneous generated or draft files. The repo currently contains several old static HTML/CSS files from earlier drafts.
+
+## Tasks
+- [ ] Decide whether old static files should be deleted or moved into an archive/proposal folder.
+- [ ] Remove root-level draft HTML files that are no longer used by the React app.
+- [ ] Remove duplicate CSS files if they are no longer needed.
+- [ ] Keep only one production HTML entry point: index.html.
+- [ ] Update README with project description, features, repo link, and Firebase Hosting link.
+- [ ] Verify all buttons and links do something meaningful.
+- [ ] Test incorrect URLs and confirm the app does not break.
+- [ ] Run browser QA on desktop and mobile widths.
+- [ ] Run npm run lint.
+- [ ] Run npm run build.
+- [ ] Deploy to Firebase Hosting.
+- [ ] Tag final commit with final and push tags.
+
+## Acceptance Criteria
+- Repo looks like a clean Vite React project.
+- No dead buttons remain.
+- README has final submission links.
+- Firebase-hosted app works across routes.
+- The final tag points at the submitted commit on main.
 EOF
 )"
 

@@ -17,7 +17,8 @@ INFO 340 Group 17 — Peitong Qi, Siyuan (Shea) Li.
 
 - React 19 + React Router
 - Vite (build + dev server)
-- Firebase Hosting
+- Firebase Hosting + Realtime Database
+- Chart.js + react-chartjs-2
 
 ## Local development
 
@@ -27,6 +28,24 @@ npm run dev      # start the dev server (http://localhost:5173)
 npm run build    # produce a production build in dist/
 npm run preview  # serve the production build locally
 ```
+
+Create a local `.env` file from the example before testing Firebase features:
+
+```bash
+cp .env.example .env
+```
+
+Then fill in the Firebase web app config values from Firebase Console. The real
+`.env` file is ignored by Git and should not be committed.
+
+## Features
+
+- Search and filter job listings by location, salary, experience, sponsorship,
+  keyword, and sort order.
+- Add applications to a Kanban board, update their status, and persist changes
+  to Firebase Realtime Database.
+- Save job-specific notes, status, and follow-up tasks from each job detail page.
+- View analytics charts for application status and location patterns.
 
 ## Deploying to Firebase
 
