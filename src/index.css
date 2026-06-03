@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap');
 @import '../css/style-copy.css';
 @import '../css/style.css';
 
@@ -87,4 +88,221 @@
   border-color: var(--color-primary);
   color: var(--color-primary);
   background: rgba(47, 94, 255, 0.08);
+}
+
+/* --- Firebase-backed interaction states --- */
+.page-subtitle {
+  margin: 0.35rem 0 0;
+  max-width: 48rem;
+  font-size: 0.95rem;
+}
+
+.feedback-message,
+.form-error {
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.feedback-message {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.feedback-message.warning,
+.form-error {
+  background: var(--color-accent-yellow-bg);
+  color: var(--color-accent-yellow);
+  border: 1px solid rgba(161, 98, 7, 0.18);
+}
+
+.application-form {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+}
+
+.compact-form-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+.application-form input,
+.application-form select,
+.task-form input,
+.status-select {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 0.62rem 0.75rem;
+}
+
+.application-form input:focus,
+.application-form select:focus,
+.task-form input:focus,
+.status-select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  outline: none;
+}
+
+.inline-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.column-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.column-count {
+  align-items: center;
+  background: var(--color-primary-light);
+  border-radius: 999px;
+  color: var(--color-primary-dark);
+  display: inline-flex;
+  font-size: 0.78rem;
+  font-weight: 800;
+  height: 1.6rem;
+  justify-content: center;
+  min-width: 1.6rem;
+  padding: 0 0.45rem;
+}
+
+.column-empty {
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  margin: 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+.application-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.application-meta {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+}
+
+.application-meta div {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.application-meta dt,
+.status-select-label {
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.application-meta dd {
+  color: var(--color-text);
+  font-size: 0.86rem;
+  margin: 0;
+}
+
+.status-select {
+  cursor: pointer;
+}
+
+.status-pill:disabled,
+.task-list input:disabled,
+.task-form button:disabled,
+.application-form button:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
+.task-complete {
+  color: var(--color-muted);
+  text-decoration: line-through;
+}
+
+.task-form {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr;
+}
+
+/* --- Analytics chart library additions --- */
+.analytics-filter-form {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  margin-bottom: 1rem;
+}
+
+.analytics-kpi-grid,
+.analytics-chart-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.analytics-kpi-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 1rem;
+}
+
+.analytics-chart-grid {
+  grid-template-columns: 1fr;
+}
+
+.chart-shell {
+  height: 270px;
+  min-width: 0;
+}
+
+.recharts-wrapper,
+.recharts-surface {
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .compact-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .analytics-filter-form,
+  .analytics-chart-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .inline-actions {
+    flex-direction: row;
+  }
+
+  .task-form {
+    align-items: center;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+@media (min-width: 992px) {
+  .analytics-kpi-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
