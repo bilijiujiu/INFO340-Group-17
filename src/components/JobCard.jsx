@@ -1,11 +1,16 @@
 import { Link } from 'react-router'
 
-export default function JobCard({ job }) {
+export default function JobCard({ job, isPreferenceMatch = false }) {
   return (
     <article className="job-card">
       <div className="job-card-top">
         <h2>{job.title}</h2>
-        <span className={`badge ${job.badgeClass}`}>{job.badge}</span>
+        <div className="job-card-badges">
+          {isPreferenceMatch && (
+            <span className="badge badge-match">Matches your preferences</span>
+          )}
+          <span className={`badge ${job.badgeClass}`}>{job.badge}</span>
+        </div>
       </div>
       <div className="job-card-meta">
         <span>{job.company}</span>
