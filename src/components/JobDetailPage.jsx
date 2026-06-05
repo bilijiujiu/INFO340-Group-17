@@ -84,11 +84,11 @@ function TaskList({ tasks, isSaving, onToggle }) {
   )
 }
 
-export default function JobDetailPage() {
+export default function JobDetailPage({ user, authLoading, onSignIn }) {
   const { id } = useParams()
   const job = getJobById(id)
   const [workspace, setWorkspace] = useState(defaultWorkspace)
-  const [isLoading, setIsLoading] = useState(Boolean(database))
+  const [isLoading, setIsLoading] = useState(Boolean(database) && Boolean(user))
   const [error, setError] = useState(firebaseConfigError)
   const [notesDraft, setNotesDraft] = useState('')
   const [isEditingNotes, setIsEditingNotes] = useState(false)
@@ -97,11 +97,14 @@ export default function JobDetailPage() {
   const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
-    if (!database) {
+    if (!database || !user) {
+      setWorkspace(defaultWorkspace)
+      setIsLoading(false)
       return undefined
     }
 
-    const workspaceRef = ref(database, `jobWorkspaces/${id}`)
+    setIsLoading(true)
+    const workspaceRef = ref(database, `users/${user.uid}/jobWorkspaces/${id}`)
     const unsubscribe = onValue(
       workspaceRef,
       (snapshot) => {
@@ -116,7 +119,7 @@ export default function JobDetailPage() {
     )
 
     return unsubscribe
-  }, [id])
+  }, [id, user])
 
   if (!job) {
     return (
@@ -145,8 +148,8 @@ export default function JobDetailPage() {
         updatedAt: new Date().toISOString(),
       }
 
-      if (database) {
-        await update(ref(database, `jobWorkspaces/${id}`), changesToSave)
+      if (database && user) {
+        await update(ref(database, `users/${user.uid}/jobWorkspaces/${id}`), changesToSave)
       } else {
         setWorkspace((currentWorkspace) => ({
           ...currentWorkspace,
@@ -237,56 +240,75 @@ export default function JobDetailPage() {
         <section className="detail-panel">
           <h2 className="workspace-title">Workspace</h2>
 
+          {authLoading && <p className="feedback-message">Checking sign-in...</p>}
+
+          {!authLoading && !user && (
+            <div className="inline-sign-in" aria-live="polite">
+              <p>Sign in to save status, notes, and follow-up tasks for this job.</p>
+              <button type="button" className="btn btn-primary" onClick={onSignIn}>
+                Sign in with Google
+              </button>
+            </div>
+          )}
+
           {error && <p className="feedback-message warning" role="alert">{error}</p>}
           {formError && <p className="form-error" role="alert">{formError}</p>}
           {isLoading && <p className="feedback-message">Loading workspace...</p>}
           {isSaving && <p className="feedback-message">Saving workspace...</p>}
 
-          <h3 className="subsection-title">Status</h3>
-          <StatusPills
-            current={workspace.status}
-            isSaving={isSaving}
-            onChange={handleStatusChange}
-          />
+          {user && (
+            <>
+              <h3 className="subsection-title">Status</h3>
+              <StatusPills
+                current={workspace.status}
+                isSaving={isSaving}
+                onChange={handleStatusChange}
+              />
+            </>
+          )}
 
-          <h3 className="subsection-title">Notes</h3>
-          <form onSubmit={handleNotesSubmit}>
-            <label htmlFor="workspace-notes" className="sr-only">
-              Your notes for this job
-            </label>
-            <textarea
-              id="workspace-notes"
-              className="notes-area"
-              value={notesValue}
-              onChange={(event) => {
-                setIsEditingNotes(true)
-                setNotesDraft(event.target.value)
-              }}
-              placeholder="Write your notes here... (e.g., recruiter name, interview format, prep reminders)"
-            />
-            <div className="save-row">
-              <button type="submit" className="btn btn-light" disabled={isSaving}>
-                Save Note
-              </button>
-            </div>
-          </form>
+          {user && (
+            <>
+              <h3 className="subsection-title">Notes</h3>
+              <form onSubmit={handleNotesSubmit}>
+                <label htmlFor="workspace-notes" className="sr-only">
+                  Your notes for this job
+                </label>
+                <textarea
+                  id="workspace-notes"
+                  className="notes-area"
+                  value={notesValue}
+                  onChange={(event) => {
+                    setIsEditingNotes(true)
+                    setNotesDraft(event.target.value)
+                  }}
+                  placeholder="Write your notes here... (e.g., recruiter name, interview format, prep reminders)"
+                />
+                <div className="save-row">
+                  <button type="submit" className="btn btn-light" disabled={isSaving}>
+                    Save Note
+                  </button>
+                </div>
+              </form>
 
-          <h3 className="subsection-title">Tasks</h3>
-          <TaskList tasks={tasks} isSaving={isSaving} onToggle={handleTaskToggle} />
+              <h3 className="subsection-title">Tasks</h3>
+              <TaskList tasks={tasks} isSaving={isSaving} onToggle={handleTaskToggle} />
 
-          <form className="task-form" onSubmit={handleTaskSubmit}>
-            <label htmlFor="new-task" className="sr-only">New task</label>
-            <input
-              id="new-task"
-              type="text"
-              value={newTaskLabel}
-              onChange={(event) => setNewTaskLabel(event.target.value)}
-              placeholder="Add a follow-up task"
-            />
-            <button type="submit" className="btn btn-outline btn-add-task-sm" disabled={isSaving}>
-              Add Task
-            </button>
-          </form>
+              <form className="task-form" onSubmit={handleTaskSubmit}>
+                <label htmlFor="new-task" className="sr-only">New task</label>
+                <input
+                  id="new-task"
+                  type="text"
+                  value={newTaskLabel}
+                  onChange={(event) => setNewTaskLabel(event.target.value)}
+                  placeholder="Add a follow-up task"
+                />
+                <button type="submit" className="btn btn-outline btn-add-task-sm" disabled={isSaving}>
+                  Add Task
+                </button>
+              </form>
+            </>
+          )}
         </section>
       </div>
     </main>

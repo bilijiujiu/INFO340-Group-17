@@ -18,7 +18,106 @@ function SiteFooter({ links }) {
   )
 }
 
-export default function Navbar({ links }) {
+function getDisplayName(user) {
+  if (!user) {
+    return ''
+  }
+
+  return user.displayName || user.email || 'Account'
+}
+
+function UserMenu({ user, onSignOut }) {
+  const [isOpen, setIsOpen] = useState(false)
+  const displayName = getDisplayName(user)
+
+  function closeMenu() {
+    setIsOpen(false)
+  }
+
+  function handleSignOut() {
+    closeMenu()
+    onSignOut()
+  }
+
+  return (
+    <div className="user-menu">
+      <button
+        type="button"
+        className="user-menu-trigger"
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen((open) => !open)}
+      >
+        <span className="user-menu-avatar" aria-hidden="true">
+          {displayName.charAt(0).toUpperCase()}
+        </span>
+        <span className="user-menu-name">{displayName}</span>
+        <span className="user-menu-caret" aria-hidden="true">▾</span>
+      </button>
+
+      {isOpen && (
+        <>
+          <button
+            type="button"
+            className="user-menu-backdrop"
+            aria-label="Close account menu"
+            onClick={closeMenu}
+          />
+          <div className="user-menu-dropdown" role="menu">
+            <div className="user-menu-header">
+              <p className="user-menu-display-name">{displayName}</p>
+              {user.email && <p className="user-menu-email">{user.email}</p>}
+            </div>
+            <div className="user-menu-divider" aria-hidden="true" />
+            <Link
+              to="/dashboard"
+              className="user-menu-item"
+              role="menuitem"
+              onClick={closeMenu}
+            >
+              Dashboard
+            </Link>
+            <Link
+              to="/onboarding"
+              className="user-menu-item"
+              role="menuitem"
+              onClick={closeMenu}
+            >
+              My Preferences
+            </Link>
+            <div className="user-menu-divider" aria-hidden="true" />
+            <button
+              type="button"
+              className="user-menu-item user-menu-signout"
+              role="menuitem"
+              onClick={handleSignOut}
+            >
+              Sign out
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+function AuthControls({ user, authLoading, onSignIn, onSignOut }) {
+  if (authLoading) {
+    return <span className="auth-status" aria-live="polite">Checking sign-in...</span>
+  }
+
+  if (!user) {
+    return (
+      <button type="button" className="btn btn-primary auth-button" onClick={onSignIn}>
+        Sign in with Google
+      </button>
+    )
+  }
+
+  return <UserMenu user={user} onSignOut={onSignOut} />
+}
+
+export default function Navbar({ links, user, authLoading, onSignIn, onSignOut }) {
   const { pathname } = useLocation()
   const [isOpen, setIsOpen] = useState(false)
   const mainLinks = links.map(({ to, label }) => (
@@ -55,6 +154,12 @@ export default function Navbar({ links }) {
           aria-label="Main navigation"
         >
           {mainLinks}
+          <AuthControls
+            user={user}
+            authLoading={authLoading}
+            onSignIn={onSignIn}
+            onSignOut={onSignOut}
+          />
         </nav>
       </div>
     </header>

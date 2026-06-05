@@ -12,6 +12,7 @@ import {
 import { Bar, Pie } from 'react-chartjs-2'
 import { statusOptions } from '../data/applications'
 import { database, firebaseConfigError } from '../firebase'
+import SignInPrompt from './SignInPrompt'
 
 const chartColors = ['#2563eb', '#16a34a', '#a16207', '#dc2626', '#7c3aed']
 
@@ -53,19 +54,22 @@ function snapshotToApplications(snapshotValue) {
   }))
 }
 
-export default function AnalyticsPage() {
+export default function AnalyticsPage({ user, authLoading, onSignIn }) {
   const [applications, setApplications] = useState([])
   const [roleFilter, setRoleFilter] = useState('')
   const [companyFilter, setCompanyFilter] = useState('')
-  const [isLoading, setIsLoading] = useState(Boolean(database))
+  const [isLoading, setIsLoading] = useState(Boolean(database) && Boolean(user))
   const [firebaseError, setFirebaseError] = useState(firebaseConfigError)
 
   useEffect(() => {
-    if (!database) {
+    if (!database || !user) {
+      setApplications([])
+      setIsLoading(false)
       return undefined
     }
 
-    const applicationsRef = ref(database, 'applications')
+    setIsLoading(true)
+    const applicationsRef = ref(database, `users/${user.uid}/applications`)
     const unsubscribe = onValue(
       applicationsRef,
       (snapshot) => {
@@ -80,7 +84,7 @@ export default function AnalyticsPage() {
     )
 
     return unsubscribe
-  }, [])
+  }, [user])
 
   const filteredApplications = useMemo(() => {
     const roleQuery = roleFilter.trim().toLowerCase()
@@ -94,6 +98,24 @@ export default function AnalyticsPage() {
       return roleMatches && companyMatches
     })
   }, [applications, roleFilter, companyFilter])
+
+  if (authLoading) {
+    return (
+      <main className="container app-page">
+        <p className="feedback-message">Checking sign-in...</p>
+      </main>
+    )
+  }
+
+  if (!user) {
+    return (
+      <SignInPrompt
+        title="Sign in to view your analytics"
+        message="Analytics summarize your own application history—status, locations, and response patterns."
+        onSignIn={onSignIn}
+      />
+    )
+  }
 
   const statusData = buildStatusCounts(filteredApplications)
   const locationData = buildLocationData(filteredApplications)

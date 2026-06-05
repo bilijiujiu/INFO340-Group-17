@@ -2,21 +2,13 @@ import { useEffect, useMemo, useState } from 'react'
 import { onValue, ref } from 'firebase/database'
 import { Link } from 'react-router'
 import { database, firebaseConfigError } from '../firebase'
+import SignInPrompt from './SignInPrompt'
 
 const summaryLabels = {
   Saved: 'Saved Jobs',
   Applied: 'Applied',
   Interview: 'Interviews',
   Offer: 'Offers',
-}
-
-const jobTypeLabels = {
-  swe: 'Software Engineer',
-  pm: 'Product Manager',
-  designer: 'Designer',
-  data: 'Data Analyst / Scientist',
-  research: 'Research',
-  other: 'Other',
 }
 
 function snapshotToApplications(snapshotValue) {
@@ -184,19 +176,22 @@ function InsightCard({ title, value }) {
   )
 }
 
-export default function DashboardPage() {
+export default function DashboardPage({ user, authLoading, onSignIn }) {
   const [applications, setApplications] = useState([])
   const [profile, setProfile] = useState(null)
-  const [isLoadingApplications, setIsLoadingApplications] = useState(Boolean(database))
+  const [isLoadingApplications, setIsLoadingApplications] = useState(Boolean(database) && Boolean(user))
   const [applicationsError, setApplicationsError] = useState(firebaseConfigError)
   const [profileError, setProfileError] = useState(firebaseConfigError)
 
   useEffect(() => {
-    if (!database) {
+    if (!database || !user) {
+      setApplications([])
+      setIsLoadingApplications(false)
       return undefined
     }
 
-    const applicationsRef = ref(database, 'applications')
+    setIsLoadingApplications(true)
+    const applicationsRef = ref(database, `users/${user.uid}/applications`)
     const unsubscribeApplications = onValue(
       applicationsRef,
       (snapshot) => {
@@ -211,14 +206,15 @@ export default function DashboardPage() {
     )
 
     return unsubscribeApplications
-  }, [])
+  }, [user])
 
   useEffect(() => {
-    if (!database) {
+    if (!database || !user) {
+      setProfile(null)
       return undefined
     }
 
-    const profileRef = ref(database, 'profiles/default')
+    const profileRef = ref(database, `users/${user.uid}/profile`)
     const unsubscribeProfile = onValue(
       profileRef,
       (snapshot) => {
@@ -231,7 +227,7 @@ export default function DashboardPage() {
     )
 
     return unsubscribeProfile
-  }, [])
+  }, [user])
 
   const summaryStats = useMemo(
     () => buildSummaryStats(applications),
@@ -269,9 +265,23 @@ export default function DashboardPage() {
     <InsightCard key={item.title} title={item.title} value={item.value} />
   ))
 
-  const profileJobType = profile?.jobType ? jobTypeLabels[profile.jobType] : ''
-  const profileLocation = profile?.locations || 'No target locations saved'
-  const visaPreference = profile?.visa === 'yes' ? 'Needs sponsorship' : 'No sponsorship needed'
+  if (authLoading) {
+    return (
+      <main className="container">
+        <p className="feedback-message">Checking sign-in...</p>
+      </main>
+    )
+  }
+
+  if (!user) {
+    return (
+      <SignInPrompt
+        title="Sign in to view your dashboard"
+        message="Your saved jobs, applications, and progress insights are personal to your account."
+        onSignIn={onSignIn}
+      />
+    )
+  }
 
   return (
     <main className="container">
@@ -284,22 +294,17 @@ export default function DashboardPage() {
           <Link className="btn btn-outline btn-welcome" to="/job-search">Browse Jobs</Link>
         </section>
 
-        <section className="dashboard-panel profile-summary">
-          <div>
-            <h2>Saved Preferences</h2>
-            {profile ? (
-              <p>
-                Looking for {profileJobType || 'open roles'} in {profileLocation}.
-                {' '}{visaPreference}.
-              </p>
-            ) : (
+        {!profile && (
+          <section className="dashboard-panel profile-summary">
+            <div>
+              <h2>Saved Preferences</h2>
               <p>Add your preferences in onboarding to personalize the dashboard.</p>
-            )}
-          </div>
-          <Link className="btn btn-light" to="/onboarding">
-            {profile ? 'Update Preferences' : 'Start Onboarding'}
-          </Link>
-        </section>
+            </div>
+            <Link className="btn btn-light" to="/onboarding">
+              Start Onboarding
+            </Link>
+          </section>
+        )}
 
         {applicationsError && (
           <p className="feedback-message warning" role="alert">

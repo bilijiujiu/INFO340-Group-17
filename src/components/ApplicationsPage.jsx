@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { onValue, push, ref, update } from 'firebase/database'
 import { statusOptions } from '../data/applications'
 import { database, firebaseConfigError } from '../firebase'
+import SignInPrompt from './SignInPrompt'
 
 const initialFormValues = {
   company: '',
@@ -192,9 +193,9 @@ function createLocalId() {
   return `local-${Date.now()}`
 }
 
-export default function ApplicationsPage() {
+export default function ApplicationsPage({ user, authLoading, onSignIn }) {
   const [applications, setApplications] = useState([])
-  const [isLoading, setIsLoading] = useState(Boolean(database))
+  const [isLoading, setIsLoading] = useState(Boolean(database) && Boolean(user))
   const [firebaseError, setFirebaseError] = useState(firebaseConfigError)
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [formValues, setFormValues] = useState(initialFormValues)
@@ -203,11 +204,14 @@ export default function ApplicationsPage() {
   const [activeSaveId, setActiveSaveId] = useState('')
 
   useEffect(() => {
-    if (!database) {
+    if (!database || !user) {
+      setApplications([])
+      setIsLoading(false)
       return undefined
     }
 
-    const applicationsRef = ref(database, 'applications')
+    setIsLoading(true)
+    const applicationsRef = ref(database, `users/${user.uid}/applications`)
     const unsubscribe = onValue(
       applicationsRef,
       (snapshot) => {
@@ -222,7 +226,7 @@ export default function ApplicationsPage() {
     )
 
     return unsubscribe
-  }, [])
+  }, [user])
 
   function handleFormChange(event) {
     const { name, value } = event.target
@@ -262,8 +266,8 @@ export default function ApplicationsPage() {
         createdAt: new Date().toISOString(),
       }
 
-      if (database) {
-        await push(ref(database, 'applications'), newApplication)
+      if (database && user) {
+        await push(ref(database, `users/${user.uid}/applications`), newApplication)
       } else {
         setApplications((currentApplications) => [
           { id: createLocalId(), ...newApplication },
@@ -285,8 +289,8 @@ export default function ApplicationsPage() {
     setFirebaseError('')
 
     try {
-      if (database) {
-        await update(ref(database, `applications/${id}`), {
+      if (database && user) {
+        await update(ref(database, `users/${user.uid}/applications/${id}`), {
           status,
           updatedAt: new Date().toISOString(),
         })
@@ -303,6 +307,24 @@ export default function ApplicationsPage() {
     } finally {
       setActiveSaveId('')
     }
+  }
+
+  if (authLoading) {
+    return (
+      <main className="container app-page">
+        <p className="feedback-message">Checking sign-in...</p>
+      </main>
+    )
+  }
+
+  if (!user) {
+    return (
+      <SignInPrompt
+        title="Sign in to track your applications"
+        message="Your application board, statuses, and deadlines are stored privately to your account."
+        onSignIn={onSignIn}
+      />
+    )
   }
 
   const columns = statusOptions.map((status) => {
