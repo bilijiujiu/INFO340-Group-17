@@ -22,20 +22,25 @@ function AppLayout() {
   const showNav = pathname !== '/onboarding'
 
   return (
-    <>
+    <div className="site-shell">
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
       {showNav && <Navbar links={navLinks} />}
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/job-search" element={<JobSearchPage />} />
-        <Route path="/job/:id" element={<JobDetailPage />} />
-        <Route path="/applications" element={<ApplicationsPage />} />
-        <Route path="/analytics" element={<AnalyticsPage />} />
-        <Route path="/onboarding" element={<OnboardingPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <div id="main-content" className="site-main" tabIndex={-1}>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/job-search" element={<JobSearchPage />} />
+          <Route path="/job/:id" element={<JobDetailPage />} />
+          <Route path="/applications" element={<ApplicationsPage />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/onboarding" element={<OnboardingPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </div>
       {showNav && <SiteFooter links={navLinks} />}
-    </>
+    </div>
   )
 }
 

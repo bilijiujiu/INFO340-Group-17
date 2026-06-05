@@ -183,65 +183,70 @@ export default function OnboardingPage() {
 
           <fieldset className="form-section">
             <legend className="section-legend">Background</legend>
-            <p className="form-label">Education Level</p>
-            <div className="radio-group">
-              <label className="radio-option">
-                <input
-                  type="radio"
-                  name="education"
-                  value="bachelor"
-                  checked={profile.education === 'bachelor'}
-                  onChange={handleChange}
-                  required
-                />
-                <span>Bachelor&apos;s</span>
-              </label>
-              <label className="radio-option">
-                <input
-                  type="radio"
-                  name="education"
-                  value="master"
-                  checked={profile.education === 'master'}
-                  onChange={handleChange}
-                />
-                <span>Master&apos;s</span>
-              </label>
-              <label className="radio-option">
-                <input
-                  type="radio"
-                  name="education"
-                  value="phd"
-                  checked={profile.education === 'phd'}
-                  onChange={handleChange}
-                />
-                <span>PhD</span>
-              </label>
-            </div>
 
-            <p className="form-label mt-3">Need Visa Sponsorship?</p>
-            <div className="radio-group">
-              <label className="radio-option">
-                <input
-                  type="radio"
-                  name="visa"
-                  value="yes"
-                  checked={profile.visa === 'yes'}
-                  onChange={handleChange}
-                  required
-                />
-                <span>Yes</span>
-              </label>
-              <label className="radio-option">
-                <input
-                  type="radio"
-                  name="visa"
-                  value="no"
-                  checked={profile.visa === 'no'}
-                  onChange={handleChange}
-                />
-                <span>No</span>
-              </label>
-            </div>
+            <fieldset className="nested-fieldset">
+              <legend className="form-label">Education Level</legend>
+              <div className="radio-group">
+                <label className="radio-option">
+                  <input
+                    type="radio"
+                    name="education"
+                    value="bachelor"
+                    checked={profile.education === 'bachelor'}
+                    onChange={handleChange}
+                    required
+                  />
+                  <span>Bachelor&apos;s</span>
+                </label>
+                <label className="radio-option">
+                  <input
+                    type="radio"
+                    name="education"
+                    value="master"
+                    checked={profile.education === 'master'}
+                    onChange={handleChange}
+                  />
+                  <span>Master&apos;s</span>
+                </label>
+                <label className="radio-option">
+                  <input
+                    type="radio"
+                    name="education"
+                    value="phd"
+                    checked={profile.education === 'phd'}
+                    onChange={handleChange}
+                  />
+                  <span>PhD</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset className="nested-fieldset">
+              <legend className="form-label">Need Visa Sponsorship?</legend>
+              <div className="radio-group">
+                <label className="radio-option">
+                  <input
+                    type="radio"
+                    name="visa"
+                    value="yes"
+                    checked={profile.visa === 'yes'}
+                    onChange={handleChange}
+                    required
+                  />
+                  <span>Yes</span>
+                </label>
+                <label className="radio-option">
+                  <input
+                    type="radio"
+                    name="visa"
+                    value="no"
+                    checked={profile.visa === 'no'}
+                    onChange={handleChange}
+                  />
+                  <span>No</span>
+                </label>
+              </div>
+            </fieldset>
           </fieldset>
 
           {error && <p className="form-error" role="alert">{error}</p>}
@@ -257,7 +262,7 @@ export default function OnboardingPage() {
       </main>
 
       <footer className="onboarding-footer">
-        <p>You can update these preferences anytime in Settings.</p>
+        <p>You can update these preferences anytime from the dashboard.</p>
       </footer>
     </div>
   )

@@ -163,8 +163,7 @@ export default function AnalyticsPage() {
   }
 
   return (
-    <div className="page-wrapper">
-      <main className="main-content">
+    <main className="container app-page">
         <header className="page-header">
           <div>
             <h1 className="page-title">Analytics</h1>
@@ -253,7 +252,6 @@ export default function AnalyticsPage() {
             </p>
           </article>
         </section>
-      </main>
-    </div>
+    </main>
   )
 }

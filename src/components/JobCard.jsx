@@ -19,7 +19,11 @@ export default function JobCard({ job, isPreferenceMatch = false }) {
       </div>
       <div className="job-card-footer">
         <span className="sponsor-tag">{job.sponsor}</span>
-        <Link to={`/job/${job.id}`} className="btn-save">
+        <Link
+          to={`/job/${job.id}`}
+          className="btn-save"
+          aria-label={`View details for ${job.title} at ${job.company}`}
+        >
           View Details
         </Link>
       </div>

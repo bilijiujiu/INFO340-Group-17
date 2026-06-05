@@ -10,7 +10,7 @@ function SiteFooter({ links }) {
     <footer className="site-footer">
       <div className="container footer-inner">
         <p>&copy; 2026 JobTrack. Built for INFO 340, University of Washington.</p>
-        <nav className="footer-nav">
+        <nav className="footer-nav" aria-label="Footer navigation">
           {footerLinks}
         </nav>
       </div>
@@ -26,6 +26,7 @@ export default function Navbar({ links }) {
       key={to}
       to={to}
       className={pathname === to ? 'active' : undefined}
+      aria-current={pathname === to ? 'page' : undefined}
       onClick={() => setIsOpen(false)}
     >
       {label}

@@ -164,10 +164,10 @@ function KanbanColumn({ status, applications, onStatusChange }) {
 
   return (
     <article className="column">
-      <header className="column-header">
+      <h2 className="column-header">
         <span>{status}</span>
         <span className="column-count">{applications.length}</span>
-      </header>
+      </h2>
       {applications.length === 0 ? (
         <p className="column-empty">No applications here yet.</p>
       ) : (
@@ -321,8 +321,7 @@ export default function ApplicationsPage() {
   })
 
   return (
-    <div className="page-wrapper">
-      <main className="main-content">
+    <main className="container app-page">
         <header className="page-header">
           <div>
             <h1 className="page-title">My Applications</h1>
@@ -368,7 +367,6 @@ export default function ApplicationsPage() {
         <section className="kanban" aria-label="Application status board">
           {columns}
         </section>
-      </main>
-    </div>
+    </main>
   )
 }

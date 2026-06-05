@@ -167,7 +167,7 @@ export default function JobSearchPage() {
   return (
     <main className="container">
       <div className="search-layout">
-        <aside className="filter-panel">
+        <aside className="filter-panel" aria-label="Job search filters">
           <div className="filter-panel-header">
             <h2>Filters</h2>
             {hasActiveFilter && (
@@ -261,7 +261,7 @@ export default function JobSearchPage() {
 
           <div className="results-header">
             <div>
-              <h1>Job Listings</h1>
+              <h1 className="page-title">Job Listings</h1>
               {profile && (
                 <p className="preference-note">
                   Jobs marked with a match badge reflect your onboarding preferences.
