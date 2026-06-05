@@ -353,3 +353,11 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+
+.image-credit {
+  padding: 0.45rem 0.75rem;
+  font-size: 0.7rem;
+  color: var(--color-muted);
+  text-align: center;
+  background: var(--color-surface);
+}

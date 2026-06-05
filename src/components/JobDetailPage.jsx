@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router'
 import { statusOptions } from '../data/applications'
 import { database, firebaseConfigError } from '../firebase'
 import { getJobById } from '../data/jobs'
+import { imageCredits } from '../data/imageCredits'
 
 const defaultWorkspace = {
   status: 'Interview',
@@ -218,9 +219,14 @@ export default function JobDetailPage() {
           </div>
 
           {job.image && (
-            <div className="hero-image detail-image">
+            <figure className="hero-image detail-image">
               <img src={job.image} alt={job.imageAlt || ''} />
-            </div>
+              {imageCredits[job.image] && (
+                <figcaption className="image-credit">
+                  {imageCredits[job.image]}
+                </figcaption>
+              )}
+            </figure>
           )}
 
           <Link to="/job-search" className="btn btn-outline">

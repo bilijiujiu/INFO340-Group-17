@@ -324,6 +324,13 @@ p {
   box-shadow: var(--shadow-lg);
 }
 
+.hero-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  vertical-align: middle;
+}
+
 /* --- Feature Cards --- */
 .features-section {
   padding: 3rem 0;

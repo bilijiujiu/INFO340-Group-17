@@ -55,3 +55,15 @@ npx firebase deploy --only hosting
 ```
 
 Requires a one-time `npx firebase login` per machine.
+
+## Image credits
+
+Decorative images in `public/img/` are free to use under the
+[Unsplash License](https://unsplash.com/license):
+
+- `hero-job-search.jpg` — landing hero
+- `team-collaboration.jpg` — landing about section and job detail pages
+- `career-growth.jpg` — job detail pages
+- `analytics-preview.jpg` — job detail pages
+
+Attribution also appears on the home page and below images on job detail pages.

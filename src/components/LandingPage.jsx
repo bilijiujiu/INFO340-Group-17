@@ -1,4 +1,5 @@
 import { Link } from 'react-router'
+import { imageCredits } from '../data/imageCredits'
 
 export default function LandingPage() {
   return (
@@ -15,12 +16,15 @@ export default function LandingPage() {
             <Link className="btn btn-primary" to="/dashboard">Open Dashboard</Link>
             <a className="btn btn-outline" href="#features">View Features</a>
           </div>
-          <div className="hero-image">
+          <figure className="hero-image">
             <img
               src="/img/hero-job-search.jpg"
               alt="Student searching for jobs on a laptop, representing the job tracking experience"
             />
-          </div>
+            <figcaption className="image-credit">
+              {imageCredits['/img/hero-job-search.jpg']}
+            </figcaption>
+          </figure>
         </div>
       </section>
 
@@ -79,12 +83,15 @@ export default function LandingPage() {
             calendars, and personal notes. JobTrack brings those pieces together so students
             can feel more organized and in control of their career search.
           </p>
-          <div className="about-image">
+          <figure className="about-image">
             <img
               src="/img/team-collaboration.jpg"
               alt="Team collaborating on organizing job applications together"
             />
-          </div>
+            <figcaption className="image-credit">
+              {imageCredits['/img/team-collaboration.jpg']}
+            </figcaption>
+          </figure>
         </div>
       </section>
     </main>
