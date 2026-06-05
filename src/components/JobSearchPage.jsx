@@ -78,17 +78,19 @@ function jobMatchesProfile(job, profile) {
   return jobTypeMatches || locationMatches || visaMatches
 }
 
-export default function JobSearchPage() {
+export default function JobSearchPage({ user }) {
   const [filters, setFilters] = useState(initialFilters)
   const [profile, setProfile] = useState(null)
-  const [profileError, setProfileError] = useState(firebaseConfigError)
+  const [profileError, setProfileError] = useState('')
 
   useEffect(() => {
-    if (!database) {
+    if (!database || !user) {
+      setProfile(null)
+      setProfileError('')
       return undefined
     }
 
-    const profileRef = ref(database, 'profiles/default')
+    const profileRef = ref(database, `users/${user.uid}/profile`)
     const unsubscribe = onValue(
       profileRef,
       (snapshot) => {
@@ -101,7 +103,7 @@ export default function JobSearchPage() {
     )
 
     return unsubscribe
-  }, [])
+  }, [user])
 
   function updateFilter(key, value) {
     setFilters((prev) => ({ ...prev, [key]: value }))

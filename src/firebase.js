@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getDatabase } from 'firebase/database'
+import { GoogleAuthProvider, getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -16,12 +17,16 @@ const hasFirebaseConfig = requiredConfigKeys.every((key) => Boolean(firebaseConf
 
 let app = null
 let database = null
+let auth = null
+let googleProvider = null
 let firebaseConfigError = ''
 
 if (hasFirebaseConfig) {
   try {
     app = initializeApp(firebaseConfig)
     database = getDatabase(app)
+    auth = getAuth(app)
+    googleProvider = new GoogleAuthProvider()
   } catch (error) {
     firebaseConfigError = error.message
   }
@@ -30,4 +35,4 @@ if (hasFirebaseConfig) {
     'Firebase is not configured yet. Add VITE_FIREBASE_* values to a local .env file to persist changes.'
 }
 
-export { app, database, firebaseConfigError, hasFirebaseConfig }
+export { app, database, auth, googleProvider, firebaseConfigError, hasFirebaseConfig }

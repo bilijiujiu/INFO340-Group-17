@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import { ref, set } from 'firebase/database'
+import { useEffect, useState } from 'react'
+import { onValue, ref, set } from 'firebase/database'
 import { Link, useNavigate } from 'react-router'
 import { database, firebaseConfigError } from '../firebase'
+import SignInPrompt from './SignInPrompt'
 
 const initialProfile = {
   name: '',
@@ -15,11 +16,33 @@ const initialProfile = {
   visa: '',
 }
 
-export default function OnboardingPage() {
+export default function OnboardingPage({ user, authLoading, onSignIn }) {
   const navigate = useNavigate()
   const [profile, setProfile] = useState(initialProfile)
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState(firebaseConfigError)
+
+  useEffect(() => {
+    if (!database || !user) {
+      return undefined
+    }
+
+    const profileRef = ref(database, `users/${user.uid}/profile`)
+    const unsubscribe = onValue(
+      profileRef,
+      (snapshot) => {
+        if (snapshot.exists()) {
+          const saved = snapshot.val()
+          setProfile((current) => ({ ...current, ...saved }))
+        }
+      },
+      (readError) => {
+        setError(readError.message)
+      }
+    )
+
+    return unsubscribe
+  }, [user])
 
   function handleChange(event) {
     const { name, value } = event.target
@@ -44,13 +67,35 @@ export default function OnboardingPage() {
         throw new Error(firebaseConfigError)
       }
 
-      await set(ref(database, 'profiles/default'), profileToSave)
+      if (!user) {
+        throw new Error('You must be signed in to save preferences.')
+      }
+
+      await set(ref(database, `users/${user.uid}/profile`), profileToSave)
       navigate('/dashboard')
     } catch (saveError) {
       setError(saveError.message)
     } finally {
       setIsSaving(false)
     }
+  }
+
+  if (authLoading) {
+    return (
+      <div className="onboarding-wrapper">
+        <p className="feedback-message">Checking sign-in...</p>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return (
+      <SignInPrompt
+        title="Sign in to save your preferences"
+        message="Onboarding personalizes your dashboard, job matches, and analytics."
+        onSignIn={onSignIn}
+      />
+    )
   }
 
   return (

@@ -1,7 +1,27 @@
 import { Link } from 'react-router'
 import { imageCredits } from '../data/imageCredits'
 
-export default function LandingPage() {
+function HeroCta({ user, authLoading, onSignIn }) {
+  if (authLoading) {
+    return <span className="hero-status">Checking sign-in...</span>
+  }
+
+  if (user) {
+    return (
+      <Link className="btn btn-primary" to="/dashboard">
+        Open Dashboard
+      </Link>
+    )
+  }
+
+  return (
+    <button type="button" className="btn btn-primary" onClick={onSignIn}>
+      Get Started with Google
+    </button>
+  )
+}
+
+export default function LandingPage({ user, authLoading, onSignIn }) {
   return (
     <main>
       <section className="hero">
@@ -13,7 +33,7 @@ export default function LandingPage() {
             deadlines, and follow-up tasks without switching between platforms.
           </p>
           <div className="hero-buttons">
-            <Link className="btn btn-primary" to="/dashboard">Open Dashboard</Link>
+            <HeroCta user={user} authLoading={authLoading} onSignIn={onSignIn} />
             <a className="btn btn-outline" href="#features">View Features</a>
           </div>
           <figure className="hero-image">
