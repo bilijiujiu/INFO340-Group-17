@@ -1,4 +1,7 @@
+import { useEffect, useState } from 'react'
+import { onValue, ref } from 'firebase/database'
 import { Link } from 'react-router'
+import { database, firebaseConfigError } from '../firebase'
 
 const summaryStats = [
   { count: '48', label: 'Saved Jobs' },
@@ -21,6 +24,15 @@ const insights = [
   { title: 'Average Wait', value: '12 days' },
   { title: 'Next Deadline', value: 'Amazon · Apr 18' },
 ]
+
+const jobTypeLabels = {
+  swe: 'Software Engineer',
+  pm: 'Product Manager',
+  designer: 'Designer',
+  data: 'Data Analyst / Scientist',
+  research: 'Research',
+  other: 'Other',
+}
 
 function SummaryCard({ count, label }) {
   return (
@@ -54,6 +66,29 @@ function InsightCard({ title, value }) {
 }
 
 export default function DashboardPage() {
+  const [profile, setProfile] = useState(null)
+  const [profileError, setProfileError] = useState(firebaseConfigError)
+
+  useEffect(() => {
+    if (!database) {
+      return undefined
+    }
+
+    const profileRef = ref(database, 'profiles/default')
+    const unsubscribe = onValue(
+      profileRef,
+      (snapshot) => {
+        setProfile(snapshot.exists() ? snapshot.val() : null)
+        setProfileError('')
+      },
+      (error) => {
+        setProfileError(error.message)
+      }
+    )
+
+    return unsubscribe
+  }, [])
+
   const summaryCards = summaryStats.map((stat) => (
     <SummaryCard key={stat.label} count={stat.count} label={stat.label} />
   ))
@@ -72,17 +107,43 @@ export default function DashboardPage() {
   const insightCards = insights.map((item) => (
     <InsightCard key={item.title} title={item.title} value={item.value} />
   ))
+  const profileJobType = profile?.jobType ? jobTypeLabels[profile.jobType] : ''
+  const profileLocation = profile?.locations || 'No target locations saved'
+  const visaPreference = profile?.visa === 'yes' ? 'Needs sponsorship' : 'No sponsorship needed'
 
   return (
     <main className="container">
       <section className="dashboard-content">
         <section className="welcome-section">
           <div>
-            <h1>Welcome back!</h1>
+            <h1>Welcome back{profile?.name ? `, ${profile.name}` : ''}!</h1>
             <p>You have 3 jobs that need attention this week.</p>
           </div>
           <Link className="btn btn-outline btn-welcome" to="/job-search">Browse Jobs</Link>
         </section>
+
+        <section className="dashboard-panel profile-summary">
+          <div>
+            <h2>Saved Preferences</h2>
+            {profile ? (
+              <p>
+                Looking for {profileJobType || 'open roles'} in {profileLocation}.
+                {' '}{visaPreference}.
+              </p>
+            ) : (
+              <p>Add your preferences in onboarding to personalize the dashboard.</p>
+            )}
+          </div>
+          <Link className="btn btn-light" to="/onboarding">
+            {profile ? 'Update Preferences' : 'Start Onboarding'}
+          </Link>
+        </section>
+
+        {profileError && (
+          <p className="feedback-message warning" role="alert">
+            {profileError}
+          </p>
+        )}
 
         <div className="summary-grid">
           {summaryCards}

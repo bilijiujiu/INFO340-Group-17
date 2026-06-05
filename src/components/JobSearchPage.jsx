@@ -1,6 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { onValue, ref } from 'firebase/database'
 import JobCard from './JobCard'
 import { jobs } from '../data/jobs'
+import { database, firebaseConfigError } from '../firebase'
 
 const locationMatchers = {
   seattle: (loc) => /seattle/i.test(loc),
@@ -37,8 +39,69 @@ const initialFilters = {
   sortBy: 'relevance',
 }
 
+const jobTypeKeywords = {
+  swe: ['software', 'engineer', 'sde', 'frontend'],
+  pm: ['product manager', 'pm'],
+  designer: ['designer', 'ux', 'ui'],
+  data: ['data', 'analyst', 'scientist'],
+  research: ['research'],
+}
+
+function parsePreferredLocations(locations) {
+  if (!locations) {
+    return []
+  }
+
+  return locations
+    .split(',')
+    .map((location) => location.trim().toLowerCase())
+    .filter(Boolean)
+}
+
+function jobMatchesProfile(job, profile) {
+  if (!profile) {
+    return false
+  }
+
+  const title = job.title.toLowerCase()
+  const jobLocation = job.location.toLowerCase()
+  const preferredLocations = parsePreferredLocations(profile.locations)
+  const keywords = jobTypeKeywords[profile.jobType] || []
+  const jobTypeMatches =
+    keywords.length > 0 && keywords.some((keyword) => title.includes(keyword))
+  const locationMatches =
+    preferredLocations.length > 0 &&
+    preferredLocations.some((location) => jobLocation.includes(location))
+  const visaMatches =
+    profile.visa === 'yes' && job.sponsor !== 'No Sponsorship'
+
+  return jobTypeMatches || locationMatches || visaMatches
+}
+
 export default function JobSearchPage() {
   const [filters, setFilters] = useState(initialFilters)
+  const [profile, setProfile] = useState(null)
+  const [profileError, setProfileError] = useState(firebaseConfigError)
+
+  useEffect(() => {
+    if (!database) {
+      return undefined
+    }
+
+    const profileRef = ref(database, 'profiles/default')
+    const unsubscribe = onValue(
+      profileRef,
+      (snapshot) => {
+        setProfile(snapshot.exists() ? snapshot.val() : null)
+        setProfileError('')
+      },
+      (error) => {
+        setProfileError(error.message)
+      }
+    )
+
+    return unsubscribe
+  }, [])
 
   function updateFilter(key, value) {
     setFilters((prev) => ({ ...prev, [key]: value }))
@@ -94,7 +157,11 @@ export default function JobSearchPage() {
     filters.sortBy !== 'relevance'
 
   const jobCards = filteredJobs.map((job) => (
-    <JobCard key={job.id} job={job} />
+    <JobCard
+      key={job.id}
+      job={job}
+      isPreferenceMatch={jobMatchesProfile(job, profile)}
+    />
   ))
 
   return (
@@ -175,6 +242,12 @@ export default function JobSearchPage() {
         </aside>
 
         <section className="search-main">
+          {profileError && (
+            <p className="feedback-message warning" role="alert">
+              {profileError}
+            </p>
+          )}
+
           <div className="search-bar" role="search">
             <label htmlFor="job-search-input" className="sr-only">Search jobs</label>
             <input
@@ -187,7 +260,14 @@ export default function JobSearchPage() {
           </div>
 
           <div className="results-header">
-            <h1>Job Listings</h1>
+            <div>
+              <h1>Job Listings</h1>
+              {profile && (
+                <p className="preference-note">
+                  Jobs marked with a match badge reflect your onboarding preferences.
+                </p>
+              )}
+            </div>
             <div className="results-controls">
               <span className="results-count">
                 Showing {filteredJobs.length} {filteredJobs.length === 1 ? 'result' : 'results'}
