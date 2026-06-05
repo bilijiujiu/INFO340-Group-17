@@ -7,6 +7,7 @@ import ApplicationsPage from './components/ApplicationsPage'
 import AnalyticsPage from './components/AnalyticsPage'
 import OnboardingPage from './components/OnboardingPage'
 import JobDetailPage from './components/JobDetailPage'
+import NotFoundPage from './components/NotFoundPage'
 
 const navLinks = [
   { to: '/', label: 'Home' },
@@ -31,6 +32,7 @@ function AppLayout() {
         <Route path="/applications" element={<ApplicationsPage />} />
         <Route path="/analytics" element={<AnalyticsPage />} />
         <Route path="/onboarding" element={<OnboardingPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       {showNav && <SiteFooter links={navLinks} />}
     </>

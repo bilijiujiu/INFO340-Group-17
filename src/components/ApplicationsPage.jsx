@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { onValue, push, ref, update } from 'firebase/database'
-import { seedApplications, statusOptions } from '../data/applications'
+import { statusOptions } from '../data/applications'
 import { database, firebaseConfigError } from '../firebase'
 
 const initialFormValues = {
@@ -193,7 +193,7 @@ function createLocalId() {
 }
 
 export default function ApplicationsPage() {
-  const [applications, setApplications] = useState(seedApplications)
+  const [applications, setApplications] = useState([])
   const [isLoading, setIsLoading] = useState(Boolean(database))
   const [firebaseError, setFirebaseError] = useState(firebaseConfigError)
   const [isFormOpen, setIsFormOpen] = useState(false)
@@ -357,6 +357,12 @@ export default function ApplicationsPage() {
             onCancel={closeForm}
             onSubmit={handleSubmit}
           />
+        )}
+
+        {!isLoading && applications.length === 0 && (
+          <div className="empty-state">
+            <p>No applications yet. Click + Add Job to track your first role.</p>
+          </div>
         )}
 
         <section className="kanban" aria-label="Application status board">
